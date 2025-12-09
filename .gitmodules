@@ -1,0 +1,3 @@
+[submodule "keyboard-3d-models"]
+	path = keyboard-3d-models
+	url = https://github.com/zk-phi/keyboard-3d-models.git
