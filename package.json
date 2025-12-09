@@ -1,0 +1,23 @@
+{
+  "name": "keyboard-3d-viewer-poc",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "update-models": "node --env-file=.env ./update_models.js"
+  },
+  "devDependencies": {
+    "@types/three": "^0.181.0",
+    "gltfpack": "^1.0.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4",
+    "vite-plugin-javascript-obfuscator": "^3.1.0"
+  },
+  "dependencies": {
+    "@zip.js/zip.js": "^2.8.11",
+    "three": "^0.181.2"
+  }
+}
