@@ -737,6 +737,11 @@ get-proto@^1.0.1:
     dunder-proto "^1.0.1"
     es-object-atoms "^1.0.0"
 
+gltfpack@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/gltfpack/-/gltfpack-1.0.0.tgz#106784ea574a75454db8bc7dff5722c679040f57"
+  integrity sha512-xX3qkyr7NyNDXWWpNxGpZf86Nz99ZMZX7xXmqRXupmzsvsqYHCAc17rFkvnES3NBGmhsmjim15VWAh3kOgJHSg==
+
 gopd@^1.0.1, gopd@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/gopd/-/gopd-1.2.0.tgz#89f56b8217bdbc8802bd299df6d7f1081d7e51a1"
