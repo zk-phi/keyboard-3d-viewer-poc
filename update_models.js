@@ -19,7 +19,7 @@ for (let dir of dirs) {
   if (!dir.isDirectory() || dir.name.startsWith(".")) {
     continue;
   }
-  console.log(`Target: public/${dir.name}.zip`);
+  console.log(`Target: ${DIST}/${dir.name}`);
 
   const writer = new Uint8ArrayWriter();
   const zipper = new ZipWriter(writer);
@@ -50,5 +50,5 @@ for (let dir of dirs) {
 
   await zipper.close();
   const buffer = await writer.getData();
-  fs.writeFileSync(`${DIST}/${dir.name}.zip`, buffer);
+  fs.writeFileSync(`${DIST}/${dir.name}`, buffer);
 }

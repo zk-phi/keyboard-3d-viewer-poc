@@ -8,7 +8,7 @@ instantiateViewer(
   document.getElementById("preview") as HTMLCanvasElement,
   async (group: THREE.Group) => {
     status.innerHTML = "モデルをダウンロード中 ...";
-    const zip = await downloadZip("./morpho.zip");
+    const zip = await downloadZip("./morpho");
     status.innerHTML = "モデルを展開中 ...";
 
     await Promise.all([
