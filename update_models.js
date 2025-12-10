@@ -49,6 +49,11 @@ for (let dir of dirs) {
   }
 
   await zipper.close();
-  const buffer = await writer.getData();
-  fs.writeFileSync(`${DIST}/${dir.name}`, buffer);
+  const arr = await writer.getData();
+
+  // nullify magic number
+  arr[0] = 0;
+  arr[1] = 0;
+
+  fs.writeFileSync(`${DIST}/${dir.name}`, arr);
 }

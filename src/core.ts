@@ -6,7 +6,7 @@ import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
-import { ZipReader, BlobReader, Uint8ArrayWriter, type Entry } from "@zip.js/zip.js";
+import { ZipReader, Uint8ArrayReader, Uint8ArrayWriter, type Entry } from "@zip.js/zip.js";
 
 const SCALE_FACTOR = 0.001;
 const PW = import.meta.env.VITE_MODEL_PW;
@@ -112,8 +112,11 @@ export const loadStl = ({ group, data, material, pos }: {
 
 export const downloadZip = async (path: string) => {
   const res = await fetch(path);
-  const blob = await res.blob();
-  const reader = new ZipReader(new BlobReader(blob));
+  const arr = await res.bytes();
+  // restore magic number
+  arr[0] = 0x50;
+  arr[1] = 0x4b;
+  const reader = new ZipReader(new Uint8ArrayReader(arr));
   return await reader.getEntries({ filenameEncoding: "utf-8" });
 };
 
