@@ -30,6 +30,8 @@ for (let dir of dirs) {
     }
     console.log(`- ${file.name}`);
 
+    // Optimize GLB with gltfpack
+    // https://support.spatial.io/hc/en-us/articles/360049861591-Optimizing-3D-Models
     let path = `${SRC}/${dir.name}/${file.name}`;
     if (file.name.endsWith(".glb")) {
       const optPath = `${TMP}/${dir.name}_${file.name}`;
