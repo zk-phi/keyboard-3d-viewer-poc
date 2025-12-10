@@ -1,7 +1,7 @@
 // reference: https://bebebe.hatenablog.jp/entry/2019/06/04/232501
 
-$fs = 0.1;
-$fa = 2;
+$fs = 0.2;
+$fa = 8;
 
 module rounded_cube(size, r) {
   h = 0.0001;
@@ -36,7 +36,7 @@ module keycap_inner_hole (bottom, top, height, r, unit) {
   extraX = (unit - 1) * 19.05;
   hull() {
     translate([0, 0, height - 1.5])
-      rounded_cube([top - 3 + extraX, top - 3, 0.01], r * (height - 1.5) / height);
+      rounded_cube([top - 3 + extraX, top - 3, 0.01], 0);
     rounded_cube([bottom - 3 + extraX, bottom - 3, 0.01], 0);
   }
 }
@@ -48,9 +48,10 @@ module stem (r, height) {
 key_bottom_size = 18;
 key_top_size = 14;
 key_top_height = 7.5;
+u = 1.0;
 
 difference () {
-  keycap_round_base(key_bottom_size, key_top_size, key_top_height, 3, 1.75);
-  keycap_inner_hole(key_bottom_size, key_top_size, key_top_height, 3, 1.75);
+  keycap_round_base(key_bottom_size, key_top_size, key_top_height, 3, u);
+  keycap_inner_hole(key_bottom_size, key_top_size, key_top_height, 3, u);
 }
 stem(2.75, key_top_height);
