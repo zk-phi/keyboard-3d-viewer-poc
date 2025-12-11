@@ -25,3 +25,4 @@ https://github.com/donmccurdy/three-gltf-viewer/blob/main/src/viewer.js
 3D モデルの一部に以下のものを含みます
 
 - `kbd` ライブラリ (@foostan) の 3D モデル (MIT License)
+- KiCAD 同梱ライブラリの 3D モデル (例外条項付き CC-BY-SA 4.0)
