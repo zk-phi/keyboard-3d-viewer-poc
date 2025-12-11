@@ -3,12 +3,12 @@ type KeySize = 1.00 | 1.25 | 1.50 | 1.75;
 export const UNIT = 19.05;
 
 export const keyLayoutHelper = ({ unit = UNIT, offset, layout, stag }: {
-  unit: number,
   offset: [number, number, number],
   layout: [number, KeySize[]][],
+  unit?: number,
   stag?: number[],
 }) => {
-  const res: Record<KeySize, [number, number, number]> = {
+  const res: Record<KeySize, [number, number, number][]> = {
     [1.00]: [],
     [1.25]: [],
     [1.50]: [],

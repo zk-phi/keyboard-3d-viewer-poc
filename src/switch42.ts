@@ -38,7 +38,7 @@ const thumbR = keyLayoutHelper({
 });
 
 const GRID = 0.297658;
-const screwPosns = [
+const screwPosns: [number, number, number][] = [
   [19.05 * 1.0, 6, 19.05 * -2.0],
   [19.05 * 5.0, 6, 19.05 * -2.0],
   [19.05 * 1.0, 6, 19.05 * -1.0],

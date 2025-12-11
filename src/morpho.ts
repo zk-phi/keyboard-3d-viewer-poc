@@ -25,7 +25,7 @@ const layoutR = keyLayoutHelper({
   ],
 });
 
-const screwPosns = [
+const screwPosns: [number, number, number][] = [
   [19.05 * -0.5, 1.6, 19.05 * 0.5],
   [19.05 * 7.0, 1.6, 19.05 * 0.5],
   [19.05 * -0.5, 1.6, 19.05 * 2.5],
