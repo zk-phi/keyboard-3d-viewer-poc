@@ -19,3 +19,9 @@ https://github.com/donmccurdy/three-gltf-viewer/blob/main/src/viewer.js
 基板の glb モデルは gltfpack でポリゴン数を削減。
 
 これらをやらないと、スマホで開いた時クラッシュする程度には重かった。
+
+## License
+
+3D モデルの一部に以下のものを含みます
+
+- `kbd` ライブラリ (@foostan) の 3D モデル (MIT License)
