@@ -75,13 +75,21 @@ export const instantiateViewer = async (
 };
 
 const gltfLoader = new GLTFLoader();
-export const loadGltf = ({ group, data, pos }: {
+export const loadGltf = ({ group, data, pos, rot, scale }: {
   group: THREE.Group,
   data: ArrayBuffer,
   pos: [number, number, number],
+  rot?: [number, number, number],
+  scale?: [number, number, number],
 }): Promise<void> => new Promise((resolve) => {
   gltfLoader.parse(data, "", (gltf) => {
     const model = gltf.scene;
+    if (rot) {
+      model.rotation.set(...rot);
+    }
+    if (scale) {
+      model.scale.set(...scale);
+    }
     model.position.set(pos[0] * SCALE_FACTOR, pos[1] * SCALE_FACTOR, pos[2] * SCALE_FACTOR);
     model.updateMatrixWorld();
     group.add(model);

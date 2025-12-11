@@ -21,6 +21,7 @@ export default defineConfig({
         switch42: resolve(__dirname, "switch42.html"),
         morpho: resolve(__dirname, "morpho.html"),
         gemini: resolve(__dirname, "gemini.html"),
+        kastor2: resolve(__dirname, "kastor2.html"),
       },
     },
   }
