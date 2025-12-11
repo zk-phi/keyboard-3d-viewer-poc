@@ -15,6 +15,11 @@ export const Materials = {
     metalness: 0,
     roughness: 0.5,
   }),
+  darkPbt: new THREE.MeshStandardMaterial({
+    color: 0x444444,
+    metalness: 0,
+    roughness: 0.5,
+  }),
   brass: new THREE.MeshStandardMaterial({
     color: 0xFFEEAA,
     metalness: 1.0,

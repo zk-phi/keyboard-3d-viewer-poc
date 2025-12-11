@@ -22,6 +22,7 @@ export default defineConfig({
         morpho: resolve(__dirname, "morpho.html"),
         gemini: resolve(__dirname, "gemini.html"),
         kastor2: resolve(__dirname, "kastor2.html"),
+        kastor: resolve(__dirname, "kastor.html"),
       },
     },
   }
