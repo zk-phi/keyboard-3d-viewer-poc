@@ -42,8 +42,20 @@ export const instantiateViewer = async (
   const env = pmrem.fromScene(new RoomEnvironment()).texture;
   scene.environment = env;
 
-  const camera = new THREE.PerspectiveCamera(45, w / h, 0.01, 100);
-  camera.position.set(0, 0.18, 0.09);
+  const group = new THREE.Group();
+  scene.add(group);
+
+  await loader(group);
+
+  const box = (new THREE.Box3()).setFromObject(group);
+  const center = box.getCenter(new THREE.Vector3());
+  const size = box.getSize(new THREE.Vector3).length();
+  group.position.x -= center.x;
+  group.position.y -= center.y;
+  group.position.z -= center.z;
+
+  const camera = new THREE.PerspectiveCamera(50, w / h, size / 100, size * 100);
+  camera.position.set(0, size / 1.8, size / 3.6);
   camera.lookAt(0, 0, 0);
   // window.addEventListener("resize", () => {
   //   camera.aspect = "<new-aspect-ratio-goes-here>";
@@ -54,17 +66,6 @@ export const instantiateViewer = async (
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.screenSpacePanning = true;
-
-  const group = new THREE.Group();
-  scene.add(group);
-
-  await loader(group);
-
-  const box = (new THREE.Box3()).setFromObject(group);
-  const center = box.getCenter(new THREE.Vector3());
-  group.position.x -= center.x;
-  group.position.y -= center.y;
-  group.position.z -= center.z;
 
   const render = () => {
     requestAnimationFrame(render);
