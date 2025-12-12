@@ -1,25 +1,21 @@
 $fs = 0.2;
 $fa = 8;
 
-module spherical_cap (r, h) {
-    d = r * 2;
-    rr = (d * d + 4 * h * h) / (8 * abs(h));
-    c = h > 0 ? rr - h : - h - rr;
-    difference() {
-      translate([0, 0, -c]) sphere(r = rr);
-      translate([0, 0, h > 0 ? -rr : rr]) cube(rr * 2, center = true);
-    }
+module screw_head (h) {
+    // M2 screw head (based on kbd lib by @foostan, MIT)
+    import("./m2_head.stl");
+    translate([0, 0, -h]) cylinder(h = h, d = 2);
 }
 
-module hex_cylinder (d, h) {
+module spacer (h) {
   $fn = 6;
-  cylinder(d = d, h = h);
+  cylinder(d = 4.62, h = h);
 }
 
 module single_spacer_preview (h, d1, d2) {
-  translate([0, 0, h + d1]) spherical_cap(1.75, 1.3);
-  translate([0, 0, - d2]) rotate([180, 0, 0]) spherical_cap(1.75, 1.3);
-  hex_cylinder(5, h);
+  translate([0, 0, h + d1]) screw_head(d1);
+  translate([0, 0, - d2]) rotate([180, 0, 0]) screw_head(d2);
+  spacer(4.62, h);
 }
 
 single_spacer_preview(5, 1.6, 1.6);

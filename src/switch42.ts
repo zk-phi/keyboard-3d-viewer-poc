@@ -75,7 +75,7 @@ instantiateViewer(
       }),
       loadStl({
         group,
-        data: await downloadRaw("./3_5mm_3.stl"),
+        data: await downloadRaw("./3_7mm_3.stl"),
         material: Materials.stainless,
         pos: screwPosns,
       }),
