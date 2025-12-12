@@ -104,6 +104,9 @@ export const loadStl = ({ group, data, material, pos }: {
   material: THREE.Material,
   pos: [number, number, number][],
 }): Promise<void> => new Promise((resolve) => {
+  if (pos.length === 0) {
+    return resolve();
+  }
   const stl = stlLoader.parse(data);
   stl.rotateX(- Math.PI / 2);
   const geometries = [];
