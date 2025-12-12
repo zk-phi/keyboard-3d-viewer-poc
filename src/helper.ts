@@ -1,10 +1,19 @@
 type KeySize = 1.00 | 1.25 | 1.50 | 1.75;
+type Row = [number, (KeySize | null)[]];
+type Layout = Row[];
 
 export const UNIT = 19.05;
 
-export const keyLayoutHelper = ({ unit = UNIT, offset, layout, stag }: {
-  offset: [number, number, number],
-  layout: [number, KeySize[]][],
+export const keyLayoutHelper = ({
+  layout,
+  offset = [0, 0, 0],
+  thumbGap = 0,
+  unit = UNIT,
+  stag,
+}: {
+  layout: Layout,
+  offset?: [number, number, number],
+  thumbGap?: number,
   unit?: number,
   stag?: number[],
 }) => {
@@ -16,12 +25,14 @@ export const keyLayoutHelper = ({ unit = UNIT, offset, layout, stag }: {
   };
 
   layout.forEach(([rowOffset, keys], y) => {
+    const isThumb = y === layout.length - 1;
     let x = rowOffset;
     keys.forEach((size, i) => {
+      if (!size) return;
       res[size].push([
         unit * (x + size / 2) + offset[0],
         offset[1],
-        unit * (y + 0.5 + (stag?.[i] ?? 0)) + offset[2],
+        unit * (y + 0.5 + (stag?.[i] ?? 0) + (isThumb ? thumbGap : 0)) + offset[2],
       ]);
       x += size;
     });

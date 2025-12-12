@@ -7,33 +7,23 @@ const status = document.getElementById("status") as HTMLDivElement;
 
 const layoutL = keyLayoutHelper({
   offset: [- UNIT * 0.75, 1.6 + 12 + 1.6 + 6.6, - UNIT * 0.5],
+  thumbGap: -0.5,
   layout: [
     [0.50, [1.25, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-    [0.50, [1.00, 1.00, 1.00]],
-  ],
-});
-
-const thumbL = keyLayoutHelper({
-  offset: [- UNIT * 0.75, 1.6 + 12 + 1.6 + 6.6, UNIT * 2],
-  layout: [
-    [3.50, [1.00, 1.00, 1.25]],
+    [0.50, [1.00, 1.00, 1.00, null, null, null]],
+    [3.50, [null, null, null, 1.00, 1.00, 1.25]],
   ],
 });
 
 const layoutR = keyLayoutHelper({
   offset: [240 - UNIT * 6.0, 1.6 + 12 + 1.6 + 6.6, - UNIT * 0.5],
+  thumbGap: -0.5,
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.25]],
     [0.75, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-    [3.25, [1.00, 1.00, 1.00]],
-  ],
-});
-
-const thumbR = keyLayoutHelper({
-  offset: [240 - UNIT * 6.0, 1.6 + 12 + 1.6 + 6.6, UNIT * 2],
-  layout: [
-    [0.00, [1.25, 1.00, 1.00]],
+    [3.25, [null, null, null, 1.00, 1.00, 1.00]],
+    [0.00, [1.25, 1.00, 1.00, null, null, null]],
   ],
 });
 
@@ -89,13 +79,13 @@ instantiateViewer(
         group,
         data: await downloadRaw("./1_00u.stl"),
         material: Materials.darkPbt,
-        pos: [...layoutL[1.00], ...thumbL[1.00], ...layoutR[1.00], ...thumbR[1.00]],
+        pos: [...layoutL[1.00], ...layoutR[1.00]],
       }),
       loadStl({
         group,
         data: await downloadRaw("./1_25u.stl"),
         material: Materials.darkPbt,
-        pos: [...layoutL[1.25], ...thumbL[1.25], ...layoutR[1.25], ...thumbR[1.25]],
+        pos: [...layoutL[1.25], ...layoutR[1.25]],
       }),
     ]);
 

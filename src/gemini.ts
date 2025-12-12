@@ -4,38 +4,29 @@ import { keyLayoutHelper, UNIT } from "./helper";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
+const STAG_UNIT = 13/64;
 
 const layoutL = keyLayoutHelper({
   offset: [0, 18.6, UNIT * -4],
-  stag: [13/64 * 3, 13/64 * 3, 13/64 * 1, 0, 0, 0],
+  stag: [STAG_UNIT * 3, STAG_UNIT * 3, STAG_UNIT * 1, 0, 0, 0],
+  thumbGap: STAG_UNIT * 1,
   layout: [
-    [0, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-    [0, [1.25, 1.00, 1.00, 1.00, 1.00, 1.00]],
-    [0, [1.50, 1.00, 1.00, 1.00, 1.00, 1.00]],
-  ],
-});
-
-const thumbL = keyLayoutHelper({
-  offset: [UNIT * 3.5, 18.6, UNIT * (-1 + 13/64)],
-  layout: [
-    [0, [1.25, 1.75]],
+    [0.0, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+    [0.0, [1.25, 1.00, 1.00, 1.00, 1.00, 1.00]],
+    [0.0, [1.50, 1.00, 1.00, 1.00, 1.00, 1.00]],
+    [3.5, [null, null, null, null, 1.25, 1.75]],
   ],
 });
 
 const layoutR = keyLayoutHelper({
   offset: [270 - UNIT * 6.5, 18.6, UNIT * -4],
-  stag: [0, 0, 0, 13/64 * 1, 13/64 * 3, 13/64 * 3],
+  stag: [0, 0, 0, STAG_UNIT * 1, STAG_UNIT * 3, STAG_UNIT * 3],
+  thumbGap: STAG_UNIT * 1,
   layout: [
     [0.50, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.25, [1.00, 1.00, 1.00, 1.00, 1.00, 1.25]],
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.50]],
-  ],
-});
-
-const thumbR = keyLayoutHelper({
-  offset: [270 - UNIT * 6.5, 18.6, UNIT * (-1 + 13/64)],
-  layout: [
-    [0, [1.75, 1.25]],
+    [0.00, [1.75, 1.25, null, null, null, null]],
   ],
 });
 
@@ -73,7 +64,7 @@ instantiateViewer(
         group,
         data: await downloadRaw("./1_25u.stl"),
         material: Materials.pbt,
-        pos: [...layoutL[1.25], ...thumbL[1.25], ...layoutR[1.25], ...thumbR[1.25]],
+        pos: [...layoutL[1.25], ...layoutR[1.25]],
       }),
       loadStl({
         group,
@@ -85,7 +76,7 @@ instantiateViewer(
         group,
         data: await downloadRaw("./1_75u.stl"),
         material: Materials.pbt,
-        pos: [...thumbL[1.75], ...thumbR[1.75]],
+        pos: [...layoutL[1.75], ...layoutR[1.75]],
       }),
       loadStl({
         group,

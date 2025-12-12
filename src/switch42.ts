@@ -7,33 +7,23 @@ const status = document.getElementById("status") as HTMLDivElement;
 
 const layoutL = keyLayoutHelper({
   offset: [-120, 22.6, UNIT * -3],
+  thumbGap: 0.25,
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-  ],
-});
-
-const thumbL = keyLayoutHelper({
-  offset: [-120, 22.6, UNIT * 0.25],
-  layout: [
-    [3.00, [1.00, 1.00, 1.00]],
+    [3.00, [null, null, null, 1.00, 1.00, 1.00]],
   ],
 });
 
 const layoutR = keyLayoutHelper({
   offset: [0, 22.6, UNIT * -3],
+  thumbGap: 0.25,
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-  ],
-});
-
-const thumbR = keyLayoutHelper({
-  offset: [0, 22.6, UNIT * 0.25],
-  layout: [
-    [0.00, [1.00, 1.00, 1.00]],
+    [0.00, [1.00, 1.00, 1.00, null, null, null]],
   ],
 });
 
@@ -81,7 +71,7 @@ instantiateViewer(
         group,
         data: await downloadRaw("./1_00u.stl"),
         material: Materials.pbt,
-        pos: [...layoutR[1.00], ...thumbR[1.00], ...layoutL[1.00], ...thumbL[1.00]],
+        pos: [...layoutR[1.00], ...layoutL[1.00]],
       }),
       loadStl({
         group,
