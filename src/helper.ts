@@ -44,6 +44,6 @@ export const keyLayoutHelper = ({
 export const screwLayoutHelper = ({ offset, positions }: {
   offset: [number, number, number],
   positions: [number, number][]
-}) => (
+}): [number, number, number][] => (
   positions.map((pos) => [pos[0] + offset[0], offset[1], pos[1] + offset[2]])
 );
