@@ -12,10 +12,23 @@ module spacer (h) {
   cylinder(d = 4.62, h = h);
 }
 
+module nut () {
+  difference () {
+      translate([0, 0, -1.2]) spacer(1.2);
+      translate([0, 0, -1.2]) cylinder(h = 0.4, d = 2);
+  }
+}
+
 module single_spacer_preview (h, d1, d2) {
   translate([0, 0, h + d1]) screw_head(d1);
   translate([0, 0, - d2]) rotate([180, 0, 0]) screw_head(d2);
-  spacer(4.62, h);
+  spacer(h);
 }
 
-single_spacer_preview(5, 1.6, 1.6);
+module single_nut_preview (h) {
+    screw_head(h);
+    translate([0, 0, -h]) nut();
+}
+
+single_spacer_preview(12, 1.6, 1.6);
+//single_nut_preview(20);
