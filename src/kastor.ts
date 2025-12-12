@@ -1,12 +1,19 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, UNIT } from "./helper";
+import { keyLayoutHelper, screwLayoutHelper, UNIT } from "./helper";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
+const GRID = 0.297658;
+
+// Layout root
+const LX = - UNIT * 0.75;
+const RX = 240 - UNIT * 6.0;
+const Y  = UNIT * -0.5;
+
 const layoutL = keyLayoutHelper({
-  offset: [- UNIT * 0.75, 1.6 + 12 + 1.6 + 6.6, - UNIT * 0.5],
+  offset: [LX, 1.6 + 12 + 1.6 + 6.6, Y],
   thumbGap: -0.5,
   layout: [
     [0.50, [1.25, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -17,7 +24,7 @@ const layoutL = keyLayoutHelper({
 });
 
 const layoutR = keyLayoutHelper({
-  offset: [240 - UNIT * 6.0, 1.6 + 12 + 1.6 + 6.6, - UNIT * 0.5],
+  offset: [RX, 1.6 + 12 + 1.6 + 6.6, Y],
   thumbGap: -0.5,
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.25]],
@@ -26,6 +33,29 @@ const layoutR = keyLayoutHelper({
     [0.00, [1.25, 1.00, 1.00, null, null, null]],
   ],
 });
+
+const screwsL = screwLayoutHelper({
+  offset: [LX, 1.6, Y],
+  positions: [
+    [UNIT * 0.00 + GRID *  20, UNIT * 2.0 + GRID * 11],
+    [UNIT * 0.00 + GRID *  20, UNIT * 1.0 - GRID * 11],
+    [UNIT * 6.75 + GRID * -14, UNIT * 1.0 + GRID *  2],
+    [UNIT * 6.75 + GRID * -14, UNIT * 2.5 - GRID *  2],
+  ],
+});
+
+const screwsR = screwLayoutHelper({
+  offset: [RX, 1.6, Y],
+  positions: [
+    [UNIT * 0.00 + GRID *  14, UNIT * 2.5 - GRID *  2],
+    [UNIT * 0.00 + GRID *  14, UNIT * 1.0 + GRID *  2],
+    [UNIT * 6.75 + GRID * -20, UNIT * 1.0 - GRID * 11],
+    [UNIT * 6.75 + GRID * -20, UNIT * 2.0 + GRID * 11],
+  ],
+});
+
+const TOPPLATE_Z = 1.6 + 12;
+const PCB_Z = TOPPLATE_Z + 1.6 - 5.1 - 1.6;
 
 instantiateViewer(
   document.getElementById("preview") as HTMLCanvasElement,
@@ -49,31 +79,31 @@ instantiateViewer(
       loadGltf({
         group,
         data: await unzipFile(zip, "left_pcb.glb"),
-        pos: [0, 1.6 + 12 + 1.6 - 5.1 - 1.6, 0],
+        pos: [0, PCB_Z, 0],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "right_pcb.glb"),
         rot: [0, 0, Math.PI],
-        pos: [240, 1.6 + 12 + 1.6 - 5.1 - 1.6 + 1.6, 0],
+        pos: [240, PCB_Z + 1.6, 0],
+      }),
+      loadGltf({
+        group,
+        data: await unzipFile(zip, "top.glb"),
+        pos: [0, TOPPLATE_Z, 0],
+      }),
+      loadGltf({
+        group,
+        data: await unzipFile(zip, "top.glb"),
+        rot: [0, 0, Math.PI],
+        pos: [240, TOPPLATE_Z + 1.6, 0],
       }),
       loadGltf({
         group,
         data: await downloadRaw("./ProMicro.glb"),
         scale: [0.001, 0.001, 0.001],
         rot: [- Math.PI/2, 0, - Math.PI/2],
-        pos: [240 - 3.4, 1.6 + 12 + 1.6 - 5.1 - 1.6 + 1.6 - 1.6 - 2.5, 19.05 - 0.3],
-      }),
-      loadGltf({
-        group,
-        data: await unzipFile(zip, "top.glb"),
-        pos: [0, 1.6 + 12, 0],
-      }),
-      loadGltf({
-        group,
-        data: await unzipFile(zip, "top.glb"),
-        rot: [0, 0, Math.PI],
-        pos: [240, 1.6 + 12 + 1.6, 0],
+        pos: [RX + UNIT * 6.0 - 3.4, PCB_Z - 2.5, Y + UNIT * 1.5 - GRID],
       }),
       loadStl({
         group,
@@ -86,6 +116,12 @@ instantiateViewer(
         data: await downloadRaw("./1_25u.stl"),
         material: Materials.darkPbt,
         pos: [...layoutL[1.25], ...layoutR[1.25]],
+      }),
+      loadStl({
+        group,
+        data: await downloadRaw("./pcb_12mm_pcb.stl"),
+        material: Materials.brass,
+        pos: [...screwsL, ...screwsR],
       }),
     ]);
 

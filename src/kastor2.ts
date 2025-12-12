@@ -1,12 +1,20 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, UNIT } from "./helper";
+import { keyLayoutHelper, screwLayoutHelper, UNIT } from "./helper";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
+const GRID    = 0.297658;
+const SCREW_D = 3;
+
+// Layout root
+const LX = 0;
+const RX = 140;
+const Y  = UNIT * -4;
+
 const layoutL = keyLayoutHelper({
-  offset: [0, 18.6, UNIT * -4],
+  offset: [LX, 18.6, Y],
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.00, [1.25, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -15,11 +23,43 @@ const layoutL = keyLayoutHelper({
 });
 
 const layoutR = keyLayoutHelper({
-  offset: [140, 18.6, UNIT * -4],
+  offset: [RX, 18.6, Y],
   layout: [
-    [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.25]],
-    [0.25, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-    [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.25]],
+    [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.50]],
+    [0.25, [1.00, 1.00, 1.00, 1.00, 1.00, 1.25]],
+    [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.50]],
+  ],
+});
+
+const screwsL = screwLayoutHelper({
+  offset: [LX, 18, Y],
+  positions: [
+    [UNIT * 0.00 - SCREW_D, UNIT * 3.0 + SCREW_D],
+    [UNIT * 0.00 - SCREW_D, UNIT * 1.5 + SCREW_D + GRID * 39],
+    [UNIT * 0.00 - SCREW_D, UNIT * 1.5 - SCREW_D - GRID * 39],
+    [UNIT * 0.00 - SCREW_D, UNIT * 0.0 - SCREW_D],
+    [UNIT * 3.25,           UNIT * 0.0 - SCREW_D],
+    [UNIT * 6.50 + SCREW_D, UNIT * 0.0 - SCREW_D],
+    [UNIT * 6.50 + SCREW_D, UNIT * 1.0 - SCREW_D - GRID * 21],
+    [UNIT * 6.50 + SCREW_D, UNIT * 1.0 + SCREW_D + GRID * 16],
+    [UNIT * 6.50 + SCREW_D, UNIT * 3.0 + SCREW_D],
+    [UNIT * 3.25 + SCREW_D, UNIT * 3.0 + SCREW_D],
+  ],
+});
+
+const screwsR = screwLayoutHelper({
+  offset: [RX, 18, Y],
+  positions: [
+    [UNIT * 0.00 - SCREW_D, UNIT * 3.0 + SCREW_D],
+    [UNIT * 0.00 - SCREW_D, UNIT * 1.0 + SCREW_D + GRID * 16],
+    [UNIT * 0.00 - SCREW_D, UNIT * 1.0 - SCREW_D - GRID * 21],
+    [UNIT * 0.00 - SCREW_D, UNIT * 0.0 - SCREW_D],
+    [UNIT * 3.25          , UNIT * 0.0 - SCREW_D],
+    [UNIT * 6.50 + SCREW_D, UNIT * 0.0 - SCREW_D],
+    [UNIT * 6.50 + SCREW_D, UNIT * 1.5 - SCREW_D - GRID * 39],
+    [UNIT * 6.50 + SCREW_D, UNIT * 1.5 + SCREW_D + GRID * 39],
+    [UNIT * 6.50 + SCREW_D, UNIT * 3.0 + SCREW_D],
+    [UNIT * 3.25 + SCREW_D, UNIT * 3.0 + SCREW_D],
   ],
 });
 
@@ -34,20 +74,20 @@ instantiateViewer(
       loadGltf({
         group,
         data: await unzipFile(zip, "left_pcb.glb"),
-        pos: [19.05 * 0.5, 8 - 1.2, 19.05 * -3.5],
+        pos: [UNIT * 0.5, 8 - 1.2, UNIT * -3.5],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "right_pcb.glb"),
         rot: [0, 0, Math.PI],
-        pos: [19.05 * 6.0 + 140, 8, 19.05 * -3.5],
+        pos: [UNIT * 6.0 + 140, 8, UNIT * -3.5],
       }),
       loadGltf({
         group,
         data: await downloadRaw("./ProMicro.glb"),
         scale: [0.001, 0.001, 0.001],
         rot: [- Math.PI/2, 0, - Math.PI/2],
-        pos: [19.05 * 6.0 - 3.1 + 140, 8 - 1.2 - 2.5, 19.05 * -2.5],
+        pos: [RX + UNIT * 6.0 - 3.1, 8 - 1.2 - 2.5, Y + UNIT * 1.5],
       }),
       loadStl({
         group,
@@ -73,7 +113,12 @@ instantiateViewer(
         material: Materials.pbt,
         pos: [...layoutL[1.50], ...layoutR[1.50]],
       }),
-      // TODO: screws
+      loadStl({
+        group,
+        data: await downloadRaw("./20mm.stl"),
+        material: Materials.stainless,
+        pos: [...screwsL, ...screwsR],
+      }),
     ]);
 
     status.remove();

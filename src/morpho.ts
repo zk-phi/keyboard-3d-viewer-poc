@@ -1,12 +1,16 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, UNIT } from "./helper";
+import { keyLayoutHelper, screwLayoutHelper, UNIT } from "./helper";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
+// Layout root
+const LX = -160;
+const RX = 0;
+
 const layoutL = keyLayoutHelper({
-  offset: [- UNIT * 0.75 - 160, 1.6 + 5 + 1.6 + 11.6, 0],
+  offset: [LX + UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 0],
   layout: [
     [0.75, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -16,7 +20,7 @@ const layoutL = keyLayoutHelper({
 });
 
 const layoutR = keyLayoutHelper({
-  offset: [- UNIT * 0.75, 1.6 + 5 + 1.6 + 11.6, 0],
+  offset: [RX + UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 0],
   layout: [
     [0.75, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -25,20 +29,29 @@ const layoutR = keyLayoutHelper({
   ],
 });
 
-const screwPosns: [number, number, number][] = [
-  [19.05 * -0.5, 1.6, 19.05 * 0.5],
-  [19.05 * 7.0, 1.6, 19.05 * 0.5],
-  [19.05 * -0.5, 1.6, 19.05 * 2.5],
-  [19.05 * 7.0, 1.6, 19.05 * 2.5],
-  [19.05 * -0.25, 1.6, 19.05 * 3.5],
-  [19.05 * 3.0, 1.6, 19.05 * 3.5],
-  [19.05 * -0.5 - 160, 1.6, 19.05 * 0.5],
-  [19.05 * 7.0 - 160, 1.6, 19.05 * 0.5],
-  [19.05 * -0.5 - 160, 1.6, 19.05 * 2.5],
-  [19.05 * 7.0 - 160, 1.6, 19.05 * 2.5],
-  [19.05 * 3.5 - 160, 1.6, 19.05 * 3.5],
-  [19.05 * 6.75 - 160, 1.6, 19.05 * 3.5],
-];
+const screwsL = screwLayoutHelper({
+  offset: [LX + UNIT * -0.75, 1.6, 0],
+  positions: [
+    [UNIT * 0.25, UNIT * 0.5],
+    [UNIT * 7.75, UNIT * 0.5],
+    [UNIT * 0.25, UNIT * 2.5],
+    [UNIT * 7.75, UNIT * 2.5],
+    [UNIT * 4.25, UNIT * 3.5],
+    [UNIT * 7.50, UNIT * 3.5],
+  ],
+});
+
+const screwsR = screwLayoutHelper({
+  offset: [RX + UNIT * -0.75, 1.6, 0],
+  positions: [
+    [UNIT * 0.25, UNIT * 0.5],
+    [UNIT * 7.75, UNIT * 0.5],
+    [UNIT * 0.25, UNIT * 2.5],
+    [UNIT * 7.75, UNIT * 2.5],
+    [UNIT * 0.50, UNIT * 3.5],
+    [UNIT * 3.75, UNIT * 3.5],
+  ],
+});
 
 instantiateViewer(
   document.getElementById("preview") as HTMLCanvasElement,
@@ -78,7 +91,7 @@ instantiateViewer(
         group,
         data: await downloadRaw("./pcb_5mm_pcb.stl"),
         material: Materials.stainless,
-        pos: screwPosns,
+        pos: [...screwsL, ...screwsR],
       }),
     ]);
 
