@@ -23,11 +23,11 @@ export const Materials = {
   brass: new THREE.MeshStandardMaterial({
     color: 0xFFEEAA,
     metalness: 1.0,
-    roughness: 0.1,
+    roughness: 0.4,
   }),
   stainless: new THREE.MeshStandardMaterial({
-    color: 0xEEEEEE,
+    color: 0xDDDDDD,
     metalness: 1.0,
-    roughness: 0.1,
+    roughness: 0.4,
   }),
 };
