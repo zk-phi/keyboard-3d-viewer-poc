@@ -65,6 +65,7 @@ export const instantiateViewer = async (
 
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
+  controls.zoomToCursor = true;
   controls.screenSpacePanning = true;
 
   const render = () => {
