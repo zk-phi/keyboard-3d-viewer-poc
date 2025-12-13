@@ -49,13 +49,14 @@ export const instantiateViewer = async (
 
   const box = (new THREE.Box3()).setFromObject(group);
   const center = box.getCenter(new THREE.Vector3());
-  const size = box.getSize(new THREE.Vector3).length();
+  const size = box.getSize(new THREE.Vector3);
+  const ratio = Math.max(size.x / (w / 100), size.z / (h / 100 * 0.85));
   group.position.x -= center.x;
   group.position.y -= center.y;
   group.position.z -= center.z;
 
-  const camera = new THREE.PerspectiveCamera(30, w / h, size / 100, size * 100);
-  camera.position.set(0, size * 0.95, size * 0.475);
+  const camera = new THREE.PerspectiveCamera(30, w / h, 0.01, 100);
+  camera.position.set(0, ratio * 10, ratio * 5);
   // camera.lookAt(0, 0, 10000);
   // window.addEventListener("resize", () => {
   //   camera.aspect = "<new-aspect-ratio-goes-here>";
