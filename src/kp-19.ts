@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper } from "./helper";
 import { UNIT, GRID, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
