@@ -23,6 +23,7 @@ export default defineConfig({
         gemini: resolve(__dirname, "gemini.html"),
         kastor2: resolve(__dirname, "kastor2.html"),
         kastor: resolve(__dirname, "kastor.html"),
+        wym16: resolve(__dirname, "wym16.html"),
       },
     },
   }

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keyboard-3d-viewer-poc</title>
+    <style>
+#app {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+#preview {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Wym16 Keyboard</h1>
+      <div id="status"></div>
+      <canvas id="preview" width="1080px" height="540px"></canvas>
+      <p>
+        プレートの組み付け順を工夫することで、１台で様々なマウント方法を試せる実験基板です。
+      </p>
+      <p>
+        トップマウント、ボトムマウント、トレイマウント、サンドイッチ、ガスケットなど、スイッチの取り付け方には色々な種類があり、それぞれ微妙に打鍵感が変わると言われますが、アクリル積層ケースにおいて、これが実際にどのくらい打鍵感に影響するのかを研究するために設計しました。
+      </p>
+      <p>
+        これ１台で５種類のマウント方法を試すことができ、かつどのマウント方法を選んでも打面の高さがピッタリ揃うという、パズルのような変態設計になっています。
+      </p>
+      <p>
+        <a href="./index.html">＜ Back</a>
+      </p>
+    </div>
+    <script type="module" src="/src/wym16.ts"></script>
+  </body>
+</html>

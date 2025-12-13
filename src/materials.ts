@@ -20,6 +20,11 @@ export const Materials = {
     metalness: 0,
     roughness: 0.5,
   }),
+  foam: new THREE.MeshStandardMaterial({
+    color: 0x333333,
+    metalness: 0,
+    roughness: 1.0,
+  }),
   brass: new THREE.MeshStandardMaterial({
     color: 0xFFEEAA,
     metalness: 1.0,
