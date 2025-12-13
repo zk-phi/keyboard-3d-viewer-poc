@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keyboard-3d-viewer-poc</title>
+    <style>
+#app {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+#preview {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>KP-19</h1>
+      <div id="status"></div>
+      <canvas id="preview" width="1080px" height="540px"></canvas>
+      <p>
+        第一回 Meishi 展に出した名刺サイズ基板です。
+      </p>
+      <p>
+        ファームウェアに簡易的な FFT を内蔵しており、音楽プレーヤーの音声出力を接続すると、音楽に合わせて LED を制御することができます。このアイデアはのちの Affinity に引き継がれました。
+      </p>
+      <p>
+        触覚フィードバック検討のためのモーター出力端子、 SK6812Side LED の採用など、他にも実験的な要素を多く含んでいます。
+      </p>
+      <p>
+        Influenced by: Plaid
+      </p>
+      <p>
+        <a href="./index.html">＜ Back</a>
+      </p>
+    </div>
+    <script type="module" src="/src/kp-19.ts"></script>
+  </body>
+</html>

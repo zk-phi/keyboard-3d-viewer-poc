@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keyboard-3d-viewer-poc</title>
+    <style>
+#app {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+#preview {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>disco9 Keyboard</h1>
+      <div id="status"></div>
+      <canvas id="preview" width="1080px" height="540px"></canvas>
+      <p>
+        大量に LED を付けることができ、透明キーキャップと併わせてすごい光り方をするマクロパッドです。自作キーボードクラブイベント「Keysounds!!!」の第一回に合わせて作りました。
+      </p>
+      <p>
+        ALPS スイッチにも対応しており、実は「（LED 穴のない）ALPS スイッチを光らせる実験」も兼ねていました。また、秋月ジョイスティックを実装することができ、ジョイスティック付きキーボードの検討にも使いました。
+      </p>
+      <p>
+        Influenced by: -
+      </p>
+      <p>
+        <a href="./index.html">＜ Back</a>
+      </p>
+    </div>
+    <script type="module" src="/src/disco9.ts"></script>
+  </body>
+</html>

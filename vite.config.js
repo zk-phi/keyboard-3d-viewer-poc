@@ -25,6 +25,9 @@ export default defineConfig({
         kastor: resolve(__dirname, "kastor.html"),
         wym16: resolve(__dirname, "wym16.html"),
         hifumi: resolve(__dirname, "hifumi.html"),
+        disco9: resolve(__dirname, "disco9.html"),
+        "kp-19": resolve(__dirname, "kp-19.html"),
+        affinity: resolve(__dirname, "affinity.html"),
       },
     },
   }

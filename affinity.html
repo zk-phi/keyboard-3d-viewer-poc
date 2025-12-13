@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keyboard-3d-viewer-poc</title>
+    <style>
+#app {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+#preview {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Affinity Keyboard</h1>
+      <div id="status"></div>
+      <canvas id="preview" width="1080px" height="540px"></canvas>
+      <p>
+        音楽プレーヤーの音声出力を接続することで、音楽に合わせた LED イルミネーションを楽しめるテンキーです。
+      </p>
+      <p>
+        ファームウェア内で FFT していた KP-19 に対して、こちらは専用の IC を別途搭載して品質を向上しています。ノイズ対策が課題として残りました。
+      </p>
+      <p>
+        Influenced by: KP-19
+      </p>
+      <p>
+        <a href="./index.html">＜ Back</a>
+      </p>
+    </div>
+    <script type="module" src="/src/affinity.ts"></script>
+  </body>
+</html>

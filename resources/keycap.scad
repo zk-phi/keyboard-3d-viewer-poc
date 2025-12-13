@@ -67,20 +67,39 @@ module stem (height, angle) {
   }
 }
 
-module rounded_keycap (bottom, top, height, bot_r, top_r, angle, unit) {
+module choc_stem (height, angle) {
+  for (x = [-2.85, 2.85]) {
+      translate([x, 0, 0])  hull () {
+        translate([0, 0, height]) rotate([angle, 0, 0]) {
+          cube([1.2, 3, 0.01], center = true);
+        }
+        cube([1.2, 3, 0.01], center = true);
+    }
+  }
+}
+
+module rounded_keycap (bottom, top, height, bot_r, top_r, angle, unit, choc = false) {
   difference () {
     rounded_outer(bottom, top, height, bot_r, top_r, angle, unit);
     inner(bottom, top, height, 0, angle, unit);
   }
-  stem(height, angle);
+  if (choc) {
+       choc_stem(height, angle);
+  } else {
+      stem(height, angle);
+  }
 }
 
-module straight_keycap (bottom, top, height, bot_r, top_r, angle, unit) {
+module straight_keycap (bottom, top, height, bot_r, top_r, angle, unit, choc = false) {
   difference () {
     straight_outer(bottom, top, height, bot_r, top_r, angle, unit);
     inner(bottom, top, height, 0, angle, unit);
   }
-  stem(height, angle);
+  if (choc) {
+       choc_stem(height, angle);
+  } else {
+      stem(height, angle);
+  }
 }
 
 module xda_ish (unit) {
@@ -91,5 +110,10 @@ module cherry_ish (unit) {
   straight_keycap(18, 14, 7.5, 0.5, 1.0, -5.0, unit);
 }
 
-xda_ish(1.75);
+module choc (unit) {
+  straight_keycap(18, 14, 5.5, 0.5, 1.0, -3.0, unit, true);
+}
+
+choc(1.00);
+// xda_ish(1.75);
 // cherry_ish(1.75);
