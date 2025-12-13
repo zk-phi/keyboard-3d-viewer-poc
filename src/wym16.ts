@@ -5,7 +5,6 @@ import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
-const GRID = 0.297658;
 const INNTER_SCREW_D = 3.1;
 const OUTER_SCREW_D  = 4.9;
 
