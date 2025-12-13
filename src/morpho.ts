@@ -5,53 +5,72 @@ import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
-// Layout root
-const LX = -160;
-const RX = 0;
+const SCREW_POSITIONS = [
+  [UNIT * 0.25, UNIT * 0.5],
+  [UNIT * 7.75, UNIT * 0.5],
+  [UNIT * 0.25, UNIT * 2.5],
+  [UNIT * 7.75, UNIT * 2.5],
+  [UNIT * 4.25, UNIT * 3.5],
+  [UNIT * 7.50, UNIT * 3.5],
+];
 
-const layoutL = keyLayoutHelper({
-  offset: [LX + UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 0],
-  layout: [
-    [0.75, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-    [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-    [0.25, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, null]],
-    [4.25, [null, null, null, null, 1.00, 1.00, 1.00, null]],
-  ],
-});
+const layouts = [
+  keyLayoutHelper({
+    offset: [UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 0],
+    layout: [
+      [0.75,  [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [1.00,  [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [1.25,  [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [4.125, [null, null, null, null, 1.75, 1.75, null]],
+    ],
+  }),
+  keyLayoutHelper({
+    offset: [160 + UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 0],
+    layout: [
+      [1.25,  [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [1.00,  [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [1.25,  [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [4.125, [null, null, null, 1.25, 1.25, null]],
+    ],
+  }),
+  keyLayoutHelper({
+    offset: [UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 90],
+    layout: [
+      [1.25, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [1.00, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [0.75, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [4.00, [null, null, null, null, 1.50, 1.00, 1.00]],
+    ],
+  }),
+  keyLayoutHelper({
+    offset: [160 + UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 90],
+    layout: [
+      [0.75, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [1.00, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [0.75, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
+      [4.25, [null, null, null, null, 1.00, 1.00, 1.00]],
+    ],
+  }),
+];
 
-const layoutR = keyLayoutHelper({
-  offset: [RX + UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 0],
-  layout: [
-    [0.75, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-    [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-    [0.75, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
-    [0.75, [null, 1.00, 1.00, 1.00, null, null, null, null]],
-  ],
-});
-
-const screwsL = screwLayoutHelper({
-  offset: [LX + UNIT * -0.75, 1.6, 0],
-  positions: [
-    [UNIT * 0.25, UNIT * 0.5],
-    [UNIT * 7.75, UNIT * 0.5],
-    [UNIT * 0.25, UNIT * 2.5],
-    [UNIT * 7.75, UNIT * 2.5],
-    [UNIT * 4.25, UNIT * 3.5],
-    [UNIT * 7.50, UNIT * 3.5],
-  ],
-});
-
-const screwsR = screwLayoutHelper({
-  offset: [RX + UNIT * -0.75, 1.6, 0],
-  positions: [
-    [UNIT * 0.25, UNIT * 0.5],
-    [UNIT * 7.75, UNIT * 0.5],
-    [UNIT * 0.25, UNIT * 2.5],
-    [UNIT * 7.75, UNIT * 2.5],
-    [UNIT * 0.50, UNIT * 3.5],
-    [UNIT * 3.75, UNIT * 3.5],
-  ],
-});
+const screws = [
+  ...screwLayoutHelper({
+    offset: [UNIT * -0.75, 1.6, 0],
+    positions: SCREW_POSITIONS,
+  }),
+  ...screwLayoutHelper({
+    offset: [160 + UNIT * -0.75, 1.6, 0],
+    positions: SCREW_POSITIONS,
+  }),
+  ...screwLayoutHelper({
+    offset: [UNIT * -0.75, 1.6, 90],
+    positions: SCREW_POSITIONS,
+  }),
+  ...screwLayoutHelper({
+    offset: [160 + UNIT * -0.75, 1.6, 90],
+    positions: SCREW_POSITIONS,
+  }),
+];
 
 instantiateViewer(
   document.getElementById("preview") as HTMLCanvasElement,
@@ -63,35 +82,73 @@ instantiateViewer(
     await Promise.all([
       loadGltf({
         group,
-        data: await unzipFile(zip, "left_pcb.glb"),
-        pos: [-160, 5 + 1.6, 0],
-      }),
-      loadGltf({
-        group,
-        data: await unzipFile(zip, "left_bottom.glb"),
-        pos: [-160, 0, 0],
-      }),
-      loadGltf({
-        group,
-        data: await unzipFile(zip, "right_pcb.glb"),
+        data: await unzipFile(zip, "uniform_pcb.glb"),
         pos: [0, 5 + 1.6, 0],
       }),
       loadGltf({
         group,
-        data: await unzipFile(zip, "right_bottom.glb"),
+        data: await unzipFile(zip, "reverse_x_pcb.glb"),
+        pos: [160, 5 + 1.6, 0],
+      }),
+      loadGltf({
+        group,
+        data: await unzipFile(zip, "reverse_pcb.glb"),
+        pos: [0, 5 + 1.6, 90],
+      }),
+      loadGltf({
+        group,
+        data: await unzipFile(zip, "x_pcb.glb"),
+        pos: [160, 5 + 1.6, 90],
+      }),
+      loadGltf({
+        group,
+        data: await unzipFile(zip, "bottom.glb"),
         pos: [0, 0, 0],
+      }),
+      loadGltf({
+        group,
+        data: await unzipFile(zip, "bottom.glb"),
+        pos: [160, 0, 0],
+      }),
+      loadGltf({
+        group,
+        data: await unzipFile(zip, "bottom.glb"),
+        pos: [0, 0, 90],
+      }),
+      loadGltf({
+        group,
+        data: await unzipFile(zip, "bottom.glb"),
+        pos: [160, 0, 90],
       }),
       loadStl({
         group,
         data: await downloadRaw("./1_00u.stl"),
         material: Materials.pbt,
-        pos: [...layoutL[1.00], ...layoutR[1.00]],
+        pos: layouts.flatMap((l) => l[1.00]),
+      }),
+      loadStl({
+        group,
+        data: await downloadRaw("./1_25u.stl"),
+        material: Materials.pbt,
+        pos: layouts.flatMap((l) => l[1.25]),
+      }),
+      loadStl({
+        group,
+        data: await downloadRaw("./1_50u.stl"),
+        material: Materials.pbt,
+        pos: layouts.flatMap((l) => l[1.50]),
+      }),
+      loadStl({
+        group,
+        data: await downloadRaw("./1_75u.stl"),
+        material: Materials.pbt,
+        pos: layouts.flatMap((l) => l[1.75]),
       }),
       loadStl({
         group,
         data: await downloadRaw("./pcb_5mm_pcb.stl"),
         material: Materials.stainless,
-        pos: [...screwsL, ...screwsR],
+        pos: screws,
       }),
     ]);
 

@@ -54,9 +54,9 @@ export const instantiateViewer = async (
   group.position.y -= center.y;
   group.position.z -= center.z;
 
-  const camera = new THREE.PerspectiveCamera(50, w / h, size / 100, size * 100);
-  camera.position.set(0, size / 1.8, size / 3.6);
-  camera.lookAt(0, 0, 0);
+  const camera = new THREE.PerspectiveCamera(30, w / h, size / 100, size * 100);
+  camera.position.set(0, size * 0.95, size * 0.475);
+  // camera.lookAt(0, 0, 10000);
   // window.addEventListener("resize", () => {
   //   camera.aspect = "<new-aspect-ratio-goes-here>";
   //   camera.updateProjectionMatrix();
