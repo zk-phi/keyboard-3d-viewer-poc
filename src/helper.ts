@@ -1,8 +1,8 @@
+import { UNIT } from "./constants";
+
 type KeySize = 1.00 | 1.25 | 1.50 | 1.75;
 type Row = [number, (KeySize | null)[]];
 type Layout = Row[];
-
-export const UNIT = 19.05;
 
 export const keyLayoutHelper = ({
   layout,

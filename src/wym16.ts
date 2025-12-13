@@ -1,9 +1,14 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper, UNIT } from "./helper";
+import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { UNIT, PLATE_TOP_TO_PCB, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
+
+const TOP_Z = 10;
+const PCB_Z = TOP_Z + 3 - PLATE_TOP_TO_PCB;
+const CAP_Z = PCB_Z + PCB_TO_KEYCAP;
 
 const INNTER_SCREW_D = 3.1;
 const OUTER_SCREW_D  = 4.9;
@@ -17,7 +22,7 @@ const POSNS = {
 }
 
 const layout = keyLayoutHelper({
-  offset: [-110, 19.6, UNIT * -4.0],
+  offset: [-110, CAP_Z, UNIT * -4.0],
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00]],
     [0.00, [1.00, 1.00, 1.00, 1.00]],
@@ -27,7 +32,7 @@ const layout = keyLayoutHelper({
 });
 
 const outerScrews = screwLayoutHelper({
-  offset: [-110, 19.6, UNIT * -4.0],
+  offset: [-110, CAP_Z, UNIT * -4.0],
   positions: [
     [UNIT * 0.0 - OUTER_SCREW_D, UNIT * 4.0 + OUTER_SCREW_D],
     [UNIT * 0.0 - OUTER_SCREW_D, UNIT * 2.0],
@@ -61,32 +66,32 @@ instantiateViewer(
       loadGltf({
         group,
         data: await unzipFile(zip, "full_pcb.glb"),
-        pos: [-110, 6.3, UNIT * -4.0],
+        pos: [-110, PCB_Z, UNIT * -4.0],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "1u_pcb.glb"),
-        pos: [POSNS.bot.x, 6.3, UNIT * -4.0 + POSNS.bot.y],
+        pos: [POSNS.bot.x, PCB_Z, UNIT * -4.0 + POSNS.bot.y],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "1u_pcb.glb"),
-        pos: [POSNS.top.x, 6.3, UNIT * -4.0 + POSNS.top.y],
+        pos: [POSNS.top.x, PCB_Z, UNIT * -4.0 + POSNS.top.y],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "1u_pcb.glb"),
-        pos: [POSNS.gas.x, 6.3, UNIT * -4.0 + POSNS.gas.y],
+        pos: [POSNS.gas.x, PCB_Z, UNIT * -4.0 + POSNS.gas.y],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "1u_pcb.glb"),
-        pos: [POSNS.san.x, 6.3, UNIT * -4.0 + POSNS.san.y],
+        pos: [POSNS.san.x, PCB_Z, UNIT * -4.0 + POSNS.san.y],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "1u_pcb.glb"),
-        pos: [POSNS.cas.x, 6.3, UNIT * -4.0 + POSNS.cas.y],
+        pos: [POSNS.cas.x, PCB_Z, UNIT * -4.0 + POSNS.cas.y],
       }),
       loadStl({
         group,
@@ -136,11 +141,11 @@ instantiateViewer(
         material: Materials.pbt,
         pos: [
           ...layout[1.00],
-          [UNIT * 0.5 + POSNS.bot.x, 19.6, UNIT * -3.5 + POSNS.bot.y],
-          [UNIT * 0.5 + POSNS.top.x, 19.6, UNIT * -3.5 + POSNS.top.y],
-          [UNIT * 0.5 + POSNS.gas.x, 19.6, UNIT * -3.5 + POSNS.gas.y],
-          [UNIT * 0.5 + POSNS.san.x, 19.6, UNIT * -3.5 + POSNS.san.y],
-          [UNIT * 0.5 + POSNS.cas.x, 19.6, UNIT * -3.5 + POSNS.cas.y],
+          [UNIT * 0.5 + POSNS.bot.x, CAP_Z, UNIT * -3.5 + POSNS.bot.y],
+          [UNIT * 0.5 + POSNS.top.x, CAP_Z, UNIT * -3.5 + POSNS.top.y],
+          [UNIT * 0.5 + POSNS.gas.x, CAP_Z, UNIT * -3.5 + POSNS.gas.y],
+          [UNIT * 0.5 + POSNS.san.x, CAP_Z, UNIT * -3.5 + POSNS.san.y],
+          [UNIT * 0.5 + POSNS.cas.x, CAP_Z, UNIT * -3.5 + POSNS.cas.y],
         ],
       }),
       loadStl({

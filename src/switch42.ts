@@ -1,11 +1,14 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper, UNIT } from "./helper";
+import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { UNIT, GRID, PLATE_TOP_TO_PCB, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
-const GRID = 0.297658;
+const TOP_Z = 13;
+const PCB_Z = TOP_Z + 3 - PLATE_TOP_TO_PCB;
+const CAP_Z = PCB_Z + PCB_TO_KEYCAP;
 
 // Layout root
 const LX = -120;
@@ -13,7 +16,7 @@ const RX = 0;
 const Y  = UNIT * -3;
 
 const layoutL = keyLayoutHelper({
-  offset: [LX, 22.6, Y],
+  offset: [LX, CAP_Z, Y],
   thumbGap: 0.25,
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -24,7 +27,7 @@ const layoutL = keyLayoutHelper({
 });
 
 const layoutR = keyLayoutHelper({
-  offset: [RX, 22.6, Y],
+  offset: [RX, CAP_Z, Y],
   thumbGap: 0.25,
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -69,12 +72,12 @@ instantiateViewer(
       loadGltf({
         group,
         data: await unzipFile(zip, "left_pcb.glb"),
-        pos: [UNIT * 0.5 - 120, 11 - 1.6, UNIT * -2.5],
+        pos: [UNIT * 0.5 - 120, PCB_Z, UNIT * -2.5],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "right_pcb.glb"),
-        pos: [UNIT * 0.5, 11 - 1.6, UNIT * -2.5],
+        pos: [UNIT * 0.5, PCB_Z, UNIT * -2.5],
       }),
       loadStl({
         group,

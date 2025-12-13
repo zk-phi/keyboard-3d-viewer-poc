@@ -1,9 +1,13 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper, UNIT } from "./helper";
+import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { UNIT, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
+
+const PCB_Z = 1.6 + 5;
+const CAP_Z = PCB_Z + PCB_TO_KEYCAP;
 
 const SCREW_POSITIONS: [number, number][] = [
   [UNIT * 0.25, UNIT * 0.5],
@@ -16,7 +20,7 @@ const SCREW_POSITIONS: [number, number][] = [
 
 const layouts = [
   keyLayoutHelper({
-    offset: [UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 0],
+    offset: [UNIT * -0.75, CAP_Z, 0],
     layout: [
       [0.75,  [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
       [1.00,  [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -25,7 +29,7 @@ const layouts = [
     ],
   }),
   keyLayoutHelper({
-    offset: [160 + UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 0],
+    offset: [160 + UNIT * -0.75, CAP_Z, 0],
     layout: [
       [1.25,  [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
       [1.00,  [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -34,7 +38,7 @@ const layouts = [
     ],
   }),
   keyLayoutHelper({
-    offset: [UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 90],
+    offset: [UNIT * -0.75, CAP_Z, 90],
     layout: [
       [1.25, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
       [1.00, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -43,7 +47,7 @@ const layouts = [
     ],
   }),
   keyLayoutHelper({
-    offset: [160 + UNIT * -0.75, 1.6 + 5 + 1.6 + 11.6, 90],
+    offset: [160 + UNIT * -0.75, CAP_Z, 90],
     layout: [
       [0.75, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
       [1.00, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -83,22 +87,22 @@ instantiateViewer(
       loadGltf({
         group,
         data: await unzipFile(zip, "uniform_pcb.glb"),
-        pos: [0, 5 + 1.6, 0],
+        pos: [0, PCB_Z, 0],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "reverse_x_pcb.glb"),
-        pos: [160, 5 + 1.6, 0],
+        pos: [160, PCB_Z, 0],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "reverse_pcb.glb"),
-        pos: [0, 5 + 1.6, 90],
+        pos: [0, PCB_Z, 90],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "x_pcb.glb"),
-        pos: [160, 5 + 1.6, 90],
+        pos: [160, PCB_Z, 90],
       }),
       loadGltf({
         group,

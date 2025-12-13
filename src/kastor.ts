@@ -1,11 +1,14 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper, UNIT } from "./helper";
+import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { UNIT, GRID, PLATE_TOP_TO_PCB, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
-const GRID = 0.297658;
+const TOP_Z = 1.6 + 12;
+const PCB_Z = TOP_Z + 1.6 - PLATE_TOP_TO_PCB;
+const CAP_Z = PCB_Z + PCB_TO_KEYCAP;
 
 // Layout root
 const LX = - UNIT * 0.75;
@@ -13,7 +16,7 @@ const RX = 240 - UNIT * 6.0;
 const Y  = UNIT * -0.5;
 
 const layoutL = keyLayoutHelper({
-  offset: [LX, 1.6 + 12 + 1.6 + 6.6, Y],
+  offset: [LX, CAP_Z, Y],
   thumbGap: -0.5,
   layout: [
     [0.50, [1.25, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -24,7 +27,7 @@ const layoutL = keyLayoutHelper({
 });
 
 const layoutR = keyLayoutHelper({
-  offset: [RX, 1.6 + 12 + 1.6 + 6.6, Y],
+  offset: [RX, CAP_Z, Y],
   thumbGap: -0.5,
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00, 1.00, 1.25]],
@@ -53,9 +56,6 @@ const screwsR = screwLayoutHelper({
     [UNIT * 6.75 + GRID * -20, UNIT * 2.0 + GRID * 11],
   ],
 });
-
-const TOPPLATE_Z = 1.6 + 12;
-const PCB_Z = TOPPLATE_Z + 1.6 - 5.1 - 1.6;
 
 instantiateViewer(
   document.getElementById("preview") as HTMLCanvasElement,
@@ -90,13 +90,13 @@ instantiateViewer(
       loadGltf({
         group,
         data: await unzipFile(zip, "top.glb"),
-        pos: [0, TOPPLATE_Z, 0],
+        pos: [0, TOP_Z, 0],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "top.glb"),
         rot: [0, 0, Math.PI],
-        pos: [240, TOPPLATE_Z + 1.6, 0],
+        pos: [240, TOP_Z + 1.6, 0],
       }),
       loadGltf({
         group,

@@ -1,21 +1,20 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper, UNIT } from "./helper";
+import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { UNIT, GRID, PLATE_TOP_TO_PCB, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
-const GRID    = 0.297658;
 const STAG    = 13/64;
 const SCREW_D = 3.75;
 
-// Layout root
-const LX = 0;
-const RX = 270 - UNIT * 6.5;
-const Y  = UNIT * -4;
+const TOP_Z = 9;
+const PCB_Z = TOP_Z + 3 - PLATE_TOP_TO_PCB;
+const CAP_Z = PCB_Z + PCB_TO_KEYCAP;
 
 const layoutL = keyLayoutHelper({
-  offset: [LX, 18.6, Y],
+  offset: [0, CAP_Z, UNIT * -4],
   stag: [STAG * 3, STAG * 3, STAG * 1, 0, 0, 0],
   thumbGap: STAG * 1,
   layout: [
@@ -27,7 +26,7 @@ const layoutL = keyLayoutHelper({
 });
 
 const layoutR = keyLayoutHelper({
-  offset: [RX, 18.6, Y],
+  offset: [270 - UNIT * 6.5, CAP_Z, UNIT * -4],
   stag: [0, 0, 0, STAG * 1, STAG * 3, STAG * 3],
   thumbGap: STAG * 1,
   layout: [
@@ -39,7 +38,7 @@ const layoutR = keyLayoutHelper({
 });
 
 const screwsL = screwLayoutHelper({
-  offset: [LX, 17, Y],
+  offset: [0, 17, UNIT * -4],
   positions: [
     [UNIT * 0.00 - SCREW_D, UNIT * (3.0 + STAG * 3) + SCREW_D],
     [UNIT * 0.00 - SCREW_D, UNIT * (1.5 + STAG * 3) - SCREW_D + GRID * 72],
@@ -55,7 +54,7 @@ const screwsL = screwLayoutHelper({
 });
 
 const screwsR = screwLayoutHelper({
-  offset: [RX, 17, Y],
+  offset: [270 - UNIT * 6.5, 17, UNIT * -4],
   positions: [
     [UNIT * 0.00 - SCREW_D, UNIT * (4.0 + STAG * 1) + SCREW_D],
     [UNIT * 0.00 - SCREW_D, UNIT * (1.0 + STAG * 0) + SCREW_D + GRID * 23],
@@ -81,12 +80,12 @@ instantiateViewer(
       loadGltf({
         group,
         data: await unzipFile(zip, "left_pcb.glb"),
-        pos: [0, 7 - 1.6, UNIT * -4],
+        pos: [0, PCB_Z, UNIT * -4],
       }),
       loadGltf({
         group,
         data: await unzipFile(zip, "right_pcb.glb"),
-        pos: [270 - UNIT * 6.5, 7 - 1.6, UNIT * -4],
+        pos: [270 - UNIT * 6.5, PCB_Z, UNIT * -4],
       }),
       loadStl({
         group,
