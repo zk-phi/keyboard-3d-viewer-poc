@@ -5,7 +5,7 @@ import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
-const SCREW_POSITIONS = [
+const SCREW_POSITIONS: [number, number][] = [
   [UNIT * 0.25, UNIT * 0.5],
   [UNIT * 7.75, UNIT * 0.5],
   [UNIT * 0.25, UNIT * 2.5],
