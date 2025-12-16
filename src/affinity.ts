@@ -62,7 +62,7 @@ instantiateViewer(
       loadStl({
         group,
         data: await downloadRaw("./choc_1u.stl"),
-        material: Materials.acrylic,
+        material: Materials.translucent,
         pos: layout[1.00],
       }),
       loadStl({
