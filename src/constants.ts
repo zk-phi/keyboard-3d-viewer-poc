@@ -1,3 +1,5 @@
+export const SCALE_FACTOR = 0.001;
+
 export const UNIT = 19.05;
 export const GRID = 0.297658;
 
