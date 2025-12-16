@@ -28,7 +28,7 @@ export const instantiateViewer = async (
     antialias: true,
     canvas,
   });
-  renderer.setClearColor(0xCCCCC);
+  renderer.setClearColor(0xCCCCCC);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.toneMapping = THREE.LinearToneMapping;
   renderer.toneMappingExposure = 1;
