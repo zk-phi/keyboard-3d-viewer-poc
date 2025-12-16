@@ -7,8 +7,8 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { ZipReader, Uint8ArrayReader, Uint8ArrayWriter, type Entry } from "@zip.js/zip.js";
+import { SCALE_FACTOR } from "./constants";
 
-const SCALE_FACTOR = 0.001;
 const PW = import.meta.env.VITE_MODEL_PW;
 
 if (!PW) {
@@ -113,7 +113,7 @@ export const loadStl = ({ group, data, material, pos }: {
   const stl = stlLoader.parse(data);
   stl.rotateX(- Math.PI / 2);
   const geometries = [];
-  for (let p of pos) {
+  for (const p of pos) {
     const g = stl.clone();
     g.translate(...p);
     geometries.push(g);
