@@ -1,12 +1,12 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { layoutHelper, positionHelper } from "./helper";
 import { UNIT, GRID } from "./constants";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
-const layout = keyLayoutHelper({
+const layout = layoutHelper({
   offset: [GRID * 76, 5 + 1.6 + 5.5, GRID * 150],
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00]],
@@ -16,7 +16,7 @@ const layout = keyLayoutHelper({
   ],
 });
 
-const screws = screwLayoutHelper({
+const screws = positionHelper({
   offset: [GRID * 76, 1.6, GRID * 150],
   positions: [
     [UNIT * 1.0 + GRID *  0, UNIT * 4.0 + GRID * -8],
@@ -27,7 +27,7 @@ const screws = screwLayoutHelper({
   ],
 });
 
-const coverScrews = screwLayoutHelper({
+const coverScrews = positionHelper({
   offset: [GRID * 76, 1.6 + 5 + 1.6, GRID * 150],
   positions: [
     [UNIT * 4.0 + GRID *  8, UNIT * 3.0 + GRID * 11],
@@ -62,7 +62,7 @@ instantiateViewer(
       loadStl({
         group,
         data: await downloadRaw("./choc_1u.stl"),
-        material: Materials.translucent,
+        material: Materials.acrylicWithLed,
         pos: layout[1.00],
       }),
       loadStl({

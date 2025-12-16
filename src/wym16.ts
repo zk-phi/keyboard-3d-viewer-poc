@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { layoutHelper, positionHelper } from "./helper";
 import { UNIT, PLATE_TOP_TO_PCB, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
@@ -21,7 +21,7 @@ const POSNS = {
   cas: { x: 60, y: 10 },
 }
 
-const layout = keyLayoutHelper({
+const layout = layoutHelper({
   offset: [-105, CAP_Z, UNIT * -4.0],
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00]],
@@ -31,7 +31,7 @@ const layout = keyLayoutHelper({
   ],
 });
 
-const outerScrews = screwLayoutHelper({
+const outerScrews = positionHelper({
   offset: [-105, CAP_Z, UNIT * -4.0],
   positions: [
     [UNIT * 0.0 - OUTER_SCREW_D, UNIT * 4.0 + OUTER_SCREW_D],
@@ -45,7 +45,7 @@ const outerScrews = screwLayoutHelper({
   ],
 });
 
-const innerScrews = screwLayoutHelper({
+const innerScrews = positionHelper({
   offset: [-105, 15, UNIT * -4.0],
   positions: [
     [UNIT * 0.0 - INNTER_SCREW_D, UNIT * 3],
@@ -102,19 +102,19 @@ instantiateViewer(
       loadStl({
         group,
         data: await unzipFile(zip, "bottom_1u.stl"),
-        material: Materials.translucent,
+        material: Materials.acrylic,
         pos: [[POSNS.bot.x, 0, POSNS.bot.y]],
       }),
       loadStl({
         group,
         data: await unzipFile(zip, "top_1u.stl"),
-        material: Materials.translucent,
+        material: Materials.acrylic,
         pos: [[POSNS.top.x, 0, POSNS.top.y]],
       }),
       loadStl({
         group,
         data: await unzipFile(zip, "gasket_1u.stl"),
-        material: Materials.translucent,
+        material: Materials.acrylic,
         pos: [[POSNS.gas.x, 0, POSNS.gas.y]],
       }),
       loadStl({
@@ -126,13 +126,13 @@ instantiateViewer(
       loadStl({
         group,
         data: await unzipFile(zip, "sandwich_1u.stl"),
-        material: Materials.translucent,
+        material: Materials.acrylic,
         pos: [[POSNS.san.x, 0, POSNS.san.y]],
       }),
       loadStl({
         group,
         data: await unzipFile(zip, "case_1u.stl"),
-        material: Materials.translucent,
+        material: Materials.acrylic,
         pos: [[POSNS.cas.x, 0, POSNS.cas.y]],
       }),
       loadStl({

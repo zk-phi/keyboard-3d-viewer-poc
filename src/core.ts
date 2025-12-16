@@ -100,6 +100,7 @@ export const loadGltf = ({ group, data, pos, rot, scale }: {
   });
 });
 
+// NOTE: I've tried InstancedMesh, but it did not work on some keyboards
 const stlLoader = new STLLoader();
 export const loadStl = ({ group, data, material, pos }: {
   group: THREE.Group,
@@ -115,6 +116,26 @@ export const loadStl = ({ group, data, material, pos }: {
   const geometries = [];
   for (const p of pos) {
     const g = stl.clone();
+    g.translate(...p);
+    geometries.push(g);
+  }
+  const mesh = new THREE.Mesh(mergeGeometries(geometries), material);
+  mesh.scale.set(SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR);
+  group.add(mesh);
+  resolve();
+});
+
+export const addLights = ({ group, size, material, pos }: {
+  group: THREE.Group,
+  size: number,
+  material: THREE.Material,
+  pos: [number, number, number][],
+}): Promise<void> => new Promise((resolve) => {
+  const sphere = new THREE.CircleGeometry(3.0 / 2, 16);
+  const geometries = [];
+  for (const p of pos) {
+    const g = sphere.clone();
+    g.rotateX(- Math.PI / 2)
     g.translate(...p);
     geometries.push(g);
   }

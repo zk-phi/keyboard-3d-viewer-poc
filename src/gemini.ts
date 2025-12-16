@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { instantiateViewer, loadGltf, loadStl, addLights, downloadZip, downloadRaw, unzipFile } from "./core";
+import { layoutHelper, positionHelper, backlitPositionsFromLayout } from "./helper";
 import { UNIT, GRID, PLATE_TOP_TO_PCB, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
@@ -13,7 +13,7 @@ const TOP_Z = 9;
 const PCB_Z = TOP_Z + 3 - PLATE_TOP_TO_PCB;
 const CAP_Z = PCB_Z + PCB_TO_KEYCAP;
 
-const layoutL = keyLayoutHelper({
+const layoutL = layoutHelper({
   offset: [0, CAP_Z, UNIT * -4],
   stag: [STAG * 3, STAG * 3, STAG * 1, 0, 0, 0],
   thumbGap: STAG * 1,
@@ -25,7 +25,7 @@ const layoutL = keyLayoutHelper({
   ],
 });
 
-const layoutR = keyLayoutHelper({
+const layoutR = layoutHelper({
   offset: [270 - UNIT * 6.5, CAP_Z, UNIT * -4],
   stag: [0, 0, 0, STAG * 1, STAG * 3, STAG * 3],
   thumbGap: STAG * 1,
@@ -37,7 +37,7 @@ const layoutR = keyLayoutHelper({
   ],
 });
 
-const screwsL = screwLayoutHelper({
+const screwsL = positionHelper({
   offset: [0, 17, UNIT * -4],
   positions: [
     [UNIT * 0.00 - SCREW_D, UNIT * (3.0 + STAG * 3) + SCREW_D],
@@ -53,7 +53,7 @@ const screwsL = screwLayoutHelper({
   ],
 });
 
-const screwsR = screwLayoutHelper({
+const screwsR = positionHelper({
   offset: [270 - UNIT * 6.5, 17, UNIT * -4],
   positions: [
     [UNIT * 0.00 - SCREW_D, UNIT * (4.0 + STAG * 1) + SCREW_D],
@@ -90,7 +90,7 @@ instantiateViewer(
       loadStl({
         group,
         data: await unzipFile(zip, "plates.stl"),
-        material: Materials.acrylic,
+        material: Materials.acrylicWithLed,
         pos: [[0, 0, 0]],
       }),
       loadStl({
@@ -116,6 +116,14 @@ instantiateViewer(
         data: await downloadRaw("./1_75u.stl"),
         material: Materials.pbt,
         pos: [...layoutL[1.75], ...layoutR[1.75]],
+      }),
+      addLights({
+        group,
+        material: Materials.led,
+        pos: [
+          ...backlitPositionsFromLayout(layoutL),
+          ...backlitPositionsFromLayout(layoutR),
+        ],
       }),
       loadStl({
         group,

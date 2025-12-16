@@ -1,9 +1,19 @@
 import * as THREE from "three";
-import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
+import { instantiateViewer, loadGltf, loadStl, addLights, downloadZip, downloadRaw, unzipFile } from "./core";
 import { UNIT, GRID, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
+import { backlitPositionsFromLayout } from "./helper";
 
 const status = document.getElementById("status") as HTMLDivElement;
+
+const layout = {
+  [1.00]: [
+    [GRID * 52 + UNIT * 0.0, PCB_TO_KEYCAP, GRID * 140],
+    [GRID * 52 + UNIT * 1.0, PCB_TO_KEYCAP, GRID * 140],
+    [GRID * 62 + UNIT * 2.0, PCB_TO_KEYCAP, GRID * 140],
+    [GRID * 62 + UNIT * 3.0, PCB_TO_KEYCAP, GRID * 140],
+  ],
+};
 
 instantiateViewer(
   document.getElementById("preview") as HTMLCanvasElement,
@@ -21,15 +31,17 @@ instantiateViewer(
       loadStl({
         group,
         data: await downloadRaw("./1_00u.stl"),
-        material: Materials.translucent,
-        pos: [
-          [GRID * 52 + UNIT * 0.0, PCB_TO_KEYCAP, GRID * 140],
-          [GRID * 52 + UNIT * 1.0, PCB_TO_KEYCAP, GRID * 140],
-          [GRID * 62 + UNIT * 2.0, PCB_TO_KEYCAP, GRID * 140],
-          [GRID * 62 + UNIT * 3.0, PCB_TO_KEYCAP, GRID * 140],
-        ],
+        material: Materials.translucentWithLed,
+        pos: layout[1.00],
+      }),
+      addLights({
+        group,
+        material: Materials.led,
+        pos: backlitPositionsFromLayout(layout),
       }),
     ]);
+
+    // TODO: Add side LEDs
 
     status.remove();
     return;
