@@ -143,6 +143,7 @@ export const loadGltf = ({ group, data, pos, rot, scale }: {
   });
 });
 
+// NOTE: I've tried InstancedMesh, but it did not work on some keyboards
 const stlLoader = new STLLoader();
 export const loadStl = ({ group, data, material, pos }: {
   group: THREE.Group,
