@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { instantiateViewer, loadGltf, loadStl, addLights, downloadZip, downloadRaw, unzipFile } from "./core";
+import { layoutHelper, positionHelper, backlitPositionsFromLayout } from "./helper";
 import { UNIT, PLATE_TOP_TO_PCB, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
@@ -10,7 +10,7 @@ const TOP_Z = 3 + 7;
 const PCB_Z = TOP_Z + 3 - PLATE_TOP_TO_PCB;
 const CAP_Z = PCB_Z + PCB_TO_KEYCAP;
 
-const layout = keyLayoutHelper({
+const layout = layoutHelper({
   offset: [0, CAP_Z, UNIT * -2],
   layout: [
     [0.00, [1.00, 1.00, 1.00]],
@@ -18,7 +18,7 @@ const layout = keyLayoutHelper({
   ],
 });
 
-const screws = screwLayoutHelper({
+const screws = positionHelper({
   offset: [0, 3, UNIT * -2],
   positions: [
     [UNIT * 0.5, UNIT * 2.0],
@@ -52,6 +52,11 @@ instantiateViewer(
         data: await downloadRaw("./1_00u.stl"),
         material: Materials.pbt,
         pos: layout[1.00],
+      }),
+      addLights({
+        group,
+        material: Materials.led,
+        pos: backlitPositionsFromLayout(layout),
       }),
       loadStl({
         group,

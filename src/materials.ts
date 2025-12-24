@@ -1,5 +1,7 @@
 import * as THREE from "three";
 
+const LED_OFF_COLOR = new THREE.Color(0.5, 0.5, 0.5);
+
 export const Materials = {
   acrylic: new THREE.MeshPhysicalMaterial({
     color: 0xEEEEEE,
@@ -50,4 +52,8 @@ export const Materials = {
     metalness: 1.0,
     roughness: 0.4,
   }),
+  led: new THREE.MeshBasicMaterial({
+    color: LED_OFF_COLOR.clone(),
+  }),
+};
 };

@@ -168,6 +168,25 @@ export const loadStl = ({ group, data, material, pos }: {
   resolve();
 });
 
+export const addLights = ({ group, material, pos }: {
+  group: THREE.Group,
+  material: THREE.Material,
+  pos: [number, number, number][],
+}): Promise<void> => new Promise((resolve) => {
+  const sphere = new THREE.CircleGeometry(3.0 / 2, 16);
+  const geometries = [];
+  for (const p of pos) {
+    const g = sphere.clone();
+    g.rotateX(- Math.PI / 2)
+    g.translate(...p);
+    geometries.push(g);
+  }
+  const mesh = new THREE.Mesh(mergeGeometries(geometries), material);
+  mesh.scale.set(SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR);
+  group.add(mesh);
+  resolve();
+});
+
 export const downloadZip = async (path: string) => {
   const res = await fetch(path);
   const arr = await res.bytes();

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { layoutHelper, positionHelper } from "./helper";
 import { UNIT, GRID, PLATE_TOP_TO_PCB, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
@@ -15,7 +15,7 @@ const LX = - UNIT * 0.75;
 const RX = 240 - UNIT * 6.0;
 const Y  = UNIT * -0.5;
 
-const layoutL = keyLayoutHelper({
+const layoutL = layoutHelper({
   offset: [LX, CAP_Z, Y],
   thumbGap: -0.5,
   layout: [
@@ -26,7 +26,7 @@ const layoutL = keyLayoutHelper({
   ],
 });
 
-const layoutR = keyLayoutHelper({
+const layoutR = layoutHelper({
   offset: [RX, CAP_Z, Y],
   thumbGap: -0.5,
   layout: [
@@ -37,7 +37,7 @@ const layoutR = keyLayoutHelper({
   ],
 });
 
-const screwsL = screwLayoutHelper({
+const screwsL = positionHelper({
   offset: [LX, 1.6, Y],
   positions: [
     [UNIT * 0.00 + GRID *  20, UNIT * 2.0 + GRID * 11],
@@ -47,7 +47,7 @@ const screwsL = screwLayoutHelper({
   ],
 });
 
-const screwsR = screwLayoutHelper({
+const screwsR = positionHelper({
   offset: [RX, 1.6, Y],
   positions: [
     [UNIT * 0.00 + GRID *  14, UNIT * 2.5 - GRID *  2],
