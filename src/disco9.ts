@@ -2,9 +2,18 @@ import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, addLights, downloadZip, downloadRaw, unzipFile } from "./core";
 import { layoutHelper, positionHelper, backlitPositionsFromLayout } from "./helper";
 import { UNIT, GRID, PCB_TO_KEYCAP } from "./constants";
-import { Materials } from "./materials";
+import { Materials, ledOn, ledOff } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
+
+document.getElementById("led")!.addEventListener("input", (e) => {
+  const target = e.target! as HTMLInputElement;
+  if (target.checked) {
+    ledOn();
+  } else {
+    ledOff();
+  }
+});
 
 const CAP_Z = 1.6 + 5 + PCB_TO_KEYCAP;
 

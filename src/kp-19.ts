@@ -1,10 +1,19 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, addLights, downloadZip, downloadRaw, unzipFile } from "./core";
 import { UNIT, GRID, PCB_TO_KEYCAP } from "./constants";
-import { Materials } from "./materials";
+import { Materials, ledOn, ledOff } from "./materials";
 import { backlitPositionsFromLayout } from "./helper";
 
 const status = document.getElementById("status") as HTMLDivElement;
+
+document.getElementById("led")!.addEventListener("input", (e) => {
+  const target = e.target! as HTMLInputElement;
+  if (target.checked) {
+    ledOn();
+  } else {
+    ledOff();
+  }
+});
 
 const layout: { [1.00]: [number, number, number][] } = {
   [1.00]: [

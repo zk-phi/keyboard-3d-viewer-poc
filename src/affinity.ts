@@ -2,9 +2,18 @@ import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
 import { layoutHelper, positionHelper } from "./helper";
 import { UNIT, GRID } from "./constants";
-import { Materials } from "./materials";
+import { Materials, ledOn, ledOff } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
+
+document.getElementById("led")!.addEventListener("input", (e) => {
+  const target = e.target! as HTMLInputElement;
+  if (target.checked) {
+    ledOn();
+  } else {
+    ledOff();
+  }
+});
 
 const layout = layoutHelper({
   offset: [GRID * 76, 5 + 1.6 + 5.5, GRID * 150],
