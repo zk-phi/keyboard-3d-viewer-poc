@@ -6,6 +6,11 @@ import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { SMAAEffect, BloomEffect, BrightnessContrastEffect, EffectComposer, EffectPass, RenderPass } from "postprocessing";
+import { EffectComposer as ThreeEffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { OutputPass as ThreeOutputPass } from "three/addons/postprocessing/OutputPass.js";
+import { RenderPass as ThreeRenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass as ThreeBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { ZipReader, Uint8ArrayReader, Uint8ArrayWriter, type Entry } from "@zip.js/zip.js";
 import { SCALE_FACTOR } from "./constants";
 
@@ -17,6 +22,10 @@ if (!PW) {
 
 THREE.Cache.enabled = true;
 
+const POSTPROCESSOR = "postprocessing";
+// const POSTPROCESSOR = "three";
+// const POSTPROCESSOR = null;
+
 export const instantiateViewer = async (
   canvas: HTMLCanvasElement,
   loader: (group: THREE.Group) => Promise<void>,
@@ -25,8 +34,15 @@ export const instantiateViewer = async (
   const h = canvas.height;
 
   const renderer = new THREE.WebGLRenderer({
-    antialias: true,
     canvas,
+    ...(POSTPROCESSOR === "postprocessing" ? {
+      powerPreference: "high-performance",
+      antialias: false,
+      stencil: false,
+      depth: false,
+    } : {
+      antialias: true,
+    })
   });
   renderer.setClearColor(0xCCCCCC);
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -69,10 +85,37 @@ export const instantiateViewer = async (
   controls.zoomToCursor = true;
   controls.screenSpacePanning = true;
 
+  const renderFn = (() => {
+    if (POSTPROCESSOR === "postprocessing") {
+      const composer = new EffectComposer(renderer, {
+        frameBufferType: THREE.HalfFloatType,
+      });
+      composer.addPass(new RenderPass(scene, camera));
+      composer.addPass(new EffectPass(camera, new BloomEffect({
+        intensity: 1.0,
+      })));
+      composer.addPass(new EffectPass(camera, new BrightnessContrastEffect({
+        brightness: -0.04,
+        contrast: 0.1,
+      })));
+      composer.addPass(new EffectPass(camera, new SMAAEffect()));
+      return () => composer.render();
+    }
+    if (POSTPROCESSOR === "three") {
+      const composer = new ThreeEffectComposer(renderer);
+      composer.setPixelRatio(window.devicePixelRatio);
+      composer.addPass(new ThreeRenderPass(scene, camera));
+      composer.addPass(new ThreeBloomPass(new THREE.Vector2(w, h), 0.3, 1.0, 1.0));
+      composer.addPass(new ThreeOutputPass());
+      return () => composer.render();
+    }
+    return () => renderer.render(scene, camera);
+  })();
+
   const render = () => {
     requestAnimationFrame(render);
     controls.update();
-    renderer.render(scene, camera);
+    renderFn();
   };
   render();
 };
