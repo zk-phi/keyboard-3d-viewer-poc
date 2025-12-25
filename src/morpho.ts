@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper } from "./helper";
+import { layoutHelper, positionHelper } from "./helper";
 import { UNIT, PCB_TO_KEYCAP } from "./constants";
 import { Materials } from "./materials";
 
@@ -19,7 +19,7 @@ const SCREW_POSITIONS: [number, number][] = [
 ];
 
 const layouts = [
-  keyLayoutHelper({
+  layoutHelper({
     offset: [UNIT * -0.75, CAP_Z, 0],
     layout: [
       [0.75,  [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -28,7 +28,7 @@ const layouts = [
       [4.125, [null, null, null, null, 1.75, 1.75, null]],
     ],
   }),
-  keyLayoutHelper({
+  layoutHelper({
     offset: [160 + UNIT * -0.75, CAP_Z, 0],
     layout: [
       [1.25,  [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -37,7 +37,7 @@ const layouts = [
       [4.125, [null, null, null, 1.25, 1.25, null]],
     ],
   }),
-  keyLayoutHelper({
+  layoutHelper({
     offset: [UNIT * -0.75, CAP_Z, 90],
     layout: [
       [1.25, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -46,7 +46,7 @@ const layouts = [
       [4.00, [null, null, null, null, 1.50, 1.00, 1.00]],
     ],
   }),
-  keyLayoutHelper({
+  layoutHelper({
     offset: [160 + UNIT * -0.75, CAP_Z, 90],
     layout: [
       [0.75, [null, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -58,19 +58,19 @@ const layouts = [
 ];
 
 const screws = [
-  ...screwLayoutHelper({
+  ...positionHelper({
     offset: [UNIT * -0.75, 1.6, 0],
     positions: SCREW_POSITIONS,
   }),
-  ...screwLayoutHelper({
+  ...positionHelper({
     offset: [160 + UNIT * -0.75, 1.6, 0],
     positions: SCREW_POSITIONS,
   }),
-  ...screwLayoutHelper({
+  ...positionHelper({
     offset: [UNIT * -0.75, 1.6, 90],
     positions: SCREW_POSITIONS,
   }),
-  ...screwLayoutHelper({
+  ...positionHelper({
     offset: [160 + UNIT * -0.75, 1.6, 90],
     positions: SCREW_POSITIONS,
   }),

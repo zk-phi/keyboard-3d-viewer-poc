@@ -1,5 +1,8 @@
 import * as THREE from "three";
 
+const LED_COLOR = new THREE.Color(40, 0, 400);
+const LED_OFF_COLOR = new THREE.Color(0.5, 0.5, 0.5);
+
 export const Materials = {
   acrylic: new THREE.MeshPhysicalMaterial({
     color: 0xEEEEEE,
@@ -9,6 +12,8 @@ export const Materials = {
     roughness: 0,
     clearcoat: 1,
     clearcoatRoughness: 0,
+    emissive: LED_COLOR.clone(),
+    emissiveIntensity: 0,
   }),
   blackAcrylic: new THREE.MeshPhysicalMaterial({
     color: 0x666666,
@@ -29,6 +34,8 @@ export const Materials = {
     transmission: 0.5,
     thickness: 1.0,
     roughness: 0.2,
+    emissive: LED_COLOR.clone(),
+    emissiveIntensity: 0,
   }),
   darkPbt: new THREE.MeshStandardMaterial({
     color: 0x444444,
@@ -50,4 +57,19 @@ export const Materials = {
     metalness: 1.0,
     roughness: 0.4,
   }),
+  led: new THREE.MeshBasicMaterial({
+    color: LED_OFF_COLOR.clone(),
+  }),
+};
+
+export const ledOn = () => {
+  Materials.acrylic.emissiveIntensity = 0.005;
+  Materials.translucent.emissiveIntensity = 0.005;
+  Materials.led.color = LED_COLOR.clone();
+};
+
+export const ledOff = () => {
+  Materials.acrylic.emissiveIntensity = 0;
+  Materials.translucent.emissiveIntensity = 0;
+  Materials.led.color = LED_OFF_COLOR.clone();
 };
