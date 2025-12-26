@@ -111,7 +111,7 @@ module cherry_ish (unit) {
 }
 
 module choc (unit) {
-  straight_keycap(18, 14, 5.5, 0.5, 1.0, -3.0, unit, true);
+  straight_keycap(16.5, 12.5, 5.5, 0.5, 1.0, -3.0, unit, true);
 }
 
 choc(1.00);
