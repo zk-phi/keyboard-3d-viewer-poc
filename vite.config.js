@@ -28,6 +28,7 @@ export default defineConfig({
         disco9: resolve(__dirname, "disco9.html"),
         "kp-19": resolve(__dirname, "kp-19.html"),
         affinity: resolve(__dirname, "affinity.html"),
+        pollux: resolve(__dirname, "pollux.html"),
       },
     },
   }
