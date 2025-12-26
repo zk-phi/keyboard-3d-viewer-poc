@@ -9,12 +9,16 @@ export const keyLayoutHelper = ({
   offset = [0, 0, 0],
   thumbGap = 0,
   unit = UNIT,
+  unitV,
+  unitH,
   stag,
 }: {
   layout: Layout,
   offset?: [number, number, number],
   thumbGap?: number,
   unit?: number,
+  unitV?: number,
+  unitH?: number,
   stag?: number[],
 }) => {
   const res: Record<KeySize, [number, number, number][]> = {
@@ -30,9 +34,9 @@ export const keyLayoutHelper = ({
     keys.forEach((size, i) => {
       if (!size) return;
       res[size].push([
-        unit * (x + size / 2) + offset[0],
+        (unitH ?? unit) * (x + size / 2) + offset[0],
         offset[1],
-        unit * (y + 0.5 + (stag?.[i] ?? 0) + (isThumb ? thumbGap : 0)) + offset[2],
+        (unitV ?? unit) * (y + 0.5 + (stag?.[i] ?? 0) + (isThumb ? thumbGap : 0)) + offset[2],
       ]);
       x += size;
     });

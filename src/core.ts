@@ -105,7 +105,7 @@ export const loadStl = ({ group, data, material, pos }: {
   group: THREE.Group,
   data: ArrayBuffer,
   material: THREE.Material,
-  pos: [number, number, number][],
+  pos: ([number, number, number] | [number, number, number, number])[],
 }): Promise<void> => new Promise((resolve) => {
   if (pos.length === 0) {
     return resolve();
@@ -115,7 +115,10 @@ export const loadStl = ({ group, data, material, pos }: {
   const geometries = [];
   for (const p of pos) {
     const g = stl.clone();
-    g.translate(...p);
+    if (p[3]) {
+      g.rotateY(- p[3] * Math.PI / 180)
+    }
+    g.translate(p[0], p[1], p[2]);
     geometries.push(g);
   }
   const mesh = new THREE.Mesh(mergeGeometries(geometries), material);

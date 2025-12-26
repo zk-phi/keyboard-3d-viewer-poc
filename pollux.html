@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keyboard-3d-viewer-poc</title>
+    <style>
+#app {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+#preview {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Pollux Keyboard</h1>
+      <div id="status"></div>
+      <canvas id="preview" width="1080px" height="540px"></canvas>
+      <p>
+        自分で設計した２代目の分割キーボードです。
+      </p>
+      <p>
+        一般的なキーボードの Row-staggered レイアウトを踏襲しつつ、両手に配置された「Y」「B」キーや、ミニマルかつエルゴノミックな親指キーの配置、狭ピッチ化など、自作キーボードらしさを併わせ持つデザインになっています。
+      <p>
+        Influenced by: -
+      </p>
+      <p>
+        <a href="./index.html">＜ Back</a>
+      </p>
+    </div>
+    <script type="module" src="/src/pollux.ts"></script>
+  </body>
+</html>
