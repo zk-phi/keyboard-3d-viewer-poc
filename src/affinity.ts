@@ -1,13 +1,14 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
 import { keyLayoutHelper, screwLayoutHelper } from "./helper";
-import { UNIT, GRID, CHOC_PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants";
+import { UNIT, GRID } from "./constants";
+import { PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants-choc";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
 const PCB_Z = 5 + 1.6;
-const CAP_Z = PCB_Z + 1.6 + CHOC_PCB_FACE_TO_KEYCAP_BOTTOM;
+const CAP_Z = PCB_Z + 1.6 + PCB_FACE_TO_KEYCAP_BOTTOM;
 
 const layout = keyLayoutHelper({
   offset: [GRID * 76, CAP_Z, GRID * 150],

@@ -1,18 +1,15 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
 import { keyLayoutHelper } from "./helper";
-import { UNIT, CHOC_PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants";
+import { UNIT_V, UNIT_H, PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants-choc";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
-const UNIT_V = 17;
-const UNIT_H = 18;
-const GRID = 0.25;
 const SCREW_D = 2.5;
 
 const PCB_Z = 5 + 1.0;
-const CAP_Z = PCB_Z + 1.0 + CHOC_PCB_FACE_TO_KEYCAP_BOTTOM;
+const CAP_Z = PCB_Z + 1.0 + PCB_FACE_TO_KEYCAP_BOTTOM;
 
 // Layout root
 const X = 35;

@@ -1,16 +1,13 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
 import { keyLayoutHelper, screwLayoutHelper } from "./helper";
-import { CHOC_PLATE_FACE_TO_PCB_FACE, CHOC_PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants";
+import { GRID, UNIT_V, UNIT_H, PLATE_FACE_TO_PCB_FACE, PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants-choc";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
-const UNIT_V = 17;
-const UNIT_H = 18;
-const GRID = 0.25;
-const PCB_Z = 10 - CHOC_PLATE_FACE_TO_PCB_FACE - 1.6;
-const CAP_Z = PCB_Z + 1.6 + CHOC_PCB_FACE_TO_KEYCAP_BOTTOM;
+const PCB_Z = 10 - PLATE_FACE_TO_PCB_FACE - 1.6;
+const CAP_Z = PCB_Z + 1.6 + PCB_FACE_TO_KEYCAP_BOTTOM;
 
 const SCREW_D = 3;
 
@@ -33,8 +30,8 @@ const layoutL = keyLayoutHelper({
 
 const layoutR = keyLayoutHelper({
   offset: [RX, CAP_Z, Y],
-  unitV: 17,
-  unitH: 18,
+  unitV: UNIT_V,
+  unitH: UNIT_H,
   layout: [
     [0.25, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.50, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
