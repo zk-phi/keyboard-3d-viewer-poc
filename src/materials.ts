@@ -56,10 +56,10 @@ export const KeycapMaterials = {
   // ISO Enter
   blue: new THREE.MeshBasicMaterial({ color: 0x0033FF }),
   // Common
-  spacer: new THREE.MeshBasicMaterial({ color: 0xE5B200 }),
+  spacer: new THREE.MeshBasicMaterial({ color: 0xDDDDDD }),
   components: new THREE.MeshBasicMaterial({ color: 0x000000 }),
-  cover: new THREE.MeshBasicMaterial({ color: 0xEEEEEE, transparent: false, opacity: 0.7 }),
-  coverBk: new THREE.MeshBasicMaterial({ color: 0x000000, transparent: false, opacity: 0.7 }),
+  cover: new THREE.MeshBasicMaterial({ color: 0xEEEEEE, transparent: true, opacity: 0.7 }),
+  coverBk: new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.7 }),
   pcbBk: new THREE.MeshBasicMaterial({ color: 0x333333 }),
   plateStainless: new THREE.MeshBasicMaterial({ color: 0xE5E5E5 }),
   plateBlack: new THREE.MeshBasicMaterial({ color: 0x000000 }),
