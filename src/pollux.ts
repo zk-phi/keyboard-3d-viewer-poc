@@ -20,8 +20,8 @@ const Y  = UNIT_V * -4.00;
 
 const layoutL = keyLayoutHelper({
   offset: [LX, CAP_Z, Y],
-  unitV: 17,
-  unitH: 18,
+  unitV: UNIT_V,
+  unitH: UNIT_H,
   layout: [
     [0.25, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
     [0.50, [1.00, 1.00, 1.00, 1.00, 1.00, 1.00]],
@@ -110,7 +110,7 @@ instantiateViewer(
       loadStl({
         group,
         data: await downloadRaw("./choc_1u.stl"),
-        material: Materials.translucent,
+        material: Materials.pbt,
         pos: [...layoutR[1.00], ...layoutL[1.00], ...thumbs],
       }),
       loadStl({
