@@ -1,13 +1,13 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
 import { keyLayoutHelper, screwLayoutHelper } from "./helper";
-import { UNIT, PCB_TO_KEYCAP } from "./constants";
+import { UNIT, PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
 const PCB_Z = 1.6 + 5;
-const CAP_Z = PCB_Z + PCB_TO_KEYCAP;
+const CAP_Z = PCB_Z + 1.6 + PCB_FACE_TO_KEYCAP_BOTTOM;
 
 const SCREW_POSITIONS: [number, number][] = [
   [UNIT * 0.25, UNIT * 0.5],

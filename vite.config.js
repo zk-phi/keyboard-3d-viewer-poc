@@ -29,6 +29,7 @@ export default defineConfig({
         "kp-19": resolve(__dirname, "kp-19.html"),
         affinity: resolve(__dirname, "affinity.html"),
         pollux: resolve(__dirname, "pollux.html"),
+        ddm9: resolve(__dirname, "ddm9.html"),
       },
     },
   }

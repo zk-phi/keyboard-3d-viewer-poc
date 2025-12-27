@@ -1,15 +1,27 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
-import { keyLayoutHelper, screwLayoutHelper } from "./helper";
-import { UNIT, GRID, PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants";
+import { keyLayoutHelper } from "./helper";
+import { UNIT, CHOC_PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
-const CAP_Z = 1.6 + 5 + 1.6 + PCB_FACE_TO_KEYCAP_BOTTOM;
+const UNIT_V = 17;
+const UNIT_H = 18;
+const GRID = 0.25;
+const SCREW_D = 2.5;
+
+const PCB_Z = 5 + 1.0;
+const CAP_Z = PCB_Z + 1.0 + CHOC_PCB_FACE_TO_KEYCAP_BOTTOM;
+
+// Layout root
+const X = 35;
+const Y = 2;
 
 const layout = keyLayoutHelper({
-  offset: [GRID * 150, CAP_Z, GRID * -13],
+  offset: [X, CAP_Z, Y],
+  unitV: UNIT_V,
+  unitH: UNIT_H,
   layout: [
     [0.00, [1.00, 1.00, 1.00]],
     [0.00, [1.00, 1.00, 1.00]],
@@ -17,28 +29,18 @@ const layout = keyLayoutHelper({
   ],
 });
 
-const screws = screwLayoutHelper({
-  offset: [GRID * 150, 1.6, GRID * -13],
-  positions: [
-    [UNIT * 0.0 + GRID *  0, UNIT * 3.0],
-    [UNIT * 0.0 + GRID *  0, UNIT * 0.0],
-    [UNIT * 3.0 + GRID * 61, UNIT * 0.0],
-    [UNIT * 3.0 + GRID * 61, UNIT * 3.0],
-  ],
-});
-
 instantiateViewer(
   document.getElementById("preview") as HTMLCanvasElement,
   async (group: THREE.Group) => {
     status.innerHTML = "モデルをダウンロード中 ...";
-    const zip = await downloadZip("./disco9");
+    const zip = await downloadZip("./ddm9");
     status.innerHTML = "モデルを展開中 ...";
 
     await Promise.all([
       loadGltf({
         group,
         data: await unzipFile(zip, "pcb.glb"),
-        pos: [0, 1.6 + 5, 0],
+        pos: [0, PCB_Z, 0],
       }),
       loadGltf({
         group,
@@ -47,15 +49,20 @@ instantiateViewer(
       }),
       loadStl({
         group,
-        data: await downloadRaw("./1_00u.stl"),
-        material: Materials.translucent,
-        pos: layout[1.00],
+        data: await downloadRaw("./1_5mm_1.stl"),
+        material: Materials.stainless,
+        pos: [
+          [     SCREW_D, 1.0,      SCREW_D],
+          [     SCREW_D, 1.0, 55 - SCREW_D],
+          [91 - SCREW_D, 1.0,      SCREW_D],
+          [91 - SCREW_D, 1.0, 55 - SCREW_D],
+        ],
       }),
       loadStl({
         group,
-        data: await downloadRaw("./pcb_5mm_pcb.stl"),
-        material: Materials.stainless,
-        pos: screws,
+        data: await downloadRaw("./choc_1u.stl"),
+        material: Materials.acrylic,
+        pos: layout[1.00],
       }),
     ]);
 

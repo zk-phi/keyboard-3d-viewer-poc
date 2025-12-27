@@ -1,13 +1,16 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
 import { keyLayoutHelper, screwLayoutHelper } from "./helper";
-import { UNIT, GRID } from "./constants";
+import { UNIT, GRID, CHOC_PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
 
+const PCB_Z = 5 + 1.6;
+const CAP_Z = PCB_Z + 1.6 + CHOC_PCB_FACE_TO_KEYCAP_BOTTOM;
+
 const layout = keyLayoutHelper({
-  offset: [GRID * 76, 5 + 1.6 + 5.5, GRID * 150],
+  offset: [GRID * 76, CAP_Z, GRID * 150],
   layout: [
     [0.00, [1.00, 1.00, 1.00, 1.00]],
     [0.00, [1.00, 1.00, 1.00, 1.00]],
@@ -28,7 +31,7 @@ const screws = screwLayoutHelper({
 });
 
 const coverScrews = screwLayoutHelper({
-  offset: [GRID * 76, 1.6 + 5 + 1.6, GRID * 150],
+  offset: [GRID * 76, PCB_Z + 1.6, GRID * 150],
   positions: [
     [UNIT * 4.0 + GRID *  8, UNIT * 3.0 + GRID * 11],
     [UNIT * 4.0 + GRID * 56, UNIT * 3.0 + GRID * 32],
@@ -51,13 +54,13 @@ instantiateViewer(
       loadGltf({
         group,
         data: await unzipFile(zip, "pcb.glb"),
-        pos: [0, 1.6 + 5, 0],
+        pos: [0, PCB_Z, 0],
       }),
       loadStl({
         group,
         data: await unzipFile(zip, "cover.stl"),
         material: Materials.blackAcrylic,
-        pos: [[GRID * 76, 1.6 + 5 + 1.6 + 7, GRID * 150]],
+        pos: [[GRID * 76, PCB_Z + 1.6 + 7, GRID * 150]],
       }),
       loadStl({
         group,

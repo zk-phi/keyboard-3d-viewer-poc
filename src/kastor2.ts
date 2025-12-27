@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { instantiateViewer, loadGltf, loadStl, downloadZip, downloadRaw, unzipFile } from "./core";
 import { keyLayoutHelper, screwLayoutHelper } from "./helper";
-import { UNIT, GRID, PLATE_TOP_TO_PCB_1_2, PCB_TO_KEYCAP_1_2 } from "./constants";
+import { UNIT, GRID, PLATE_FACE_TO_PCB_FACE, PCB_FACE_TO_KEYCAP_BOTTOM } from "./constants";
 import { Materials } from "./materials";
 
 const status = document.getElementById("status") as HTMLDivElement;
@@ -9,8 +9,8 @@ const status = document.getElementById("status") as HTMLDivElement;
 const SCREW_D = 3;
 
 const TOP_Z = 10;
-const PCB_Z = TOP_Z + 3 - PLATE_TOP_TO_PCB_1_2;
-const CAP_Z = PCB_Z + PCB_TO_KEYCAP_1_2;
+const PCB_Z = TOP_Z + 3 - PLATE_FACE_TO_PCB_FACE - 1.2;
+const CAP_Z = PCB_Z + 1.2 + PCB_FACE_TO_KEYCAP_BOTTOM;
 
 // Layout root
 const LX = 0;
