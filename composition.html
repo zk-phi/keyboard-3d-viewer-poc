@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keyboard-3d-viewer-poc</title>
+    <style>
+#app {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+#preview {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Composition Keyboard</h1>
+      <div id="status"></div>
+      <canvas id="preview" width="1080px" height="540px"></canvas>
+      <p>
+        強めにつけた丸みが特徴的な、薄くて可愛い 40% キーボードです。
+      </p>
+      <p>
+        Equilibrium から引き続き透明感をデザインのテーマにしつつ、ChocV2 を採用することで薄さを強調しています。またベゼルを少し広めに取り、強めに丸みをつけることで可愛さを演出しています。
+      </p>
+      <p>
+        打鍵感の面でも、Gemini や Equilibrium から引き続き空洞の少ない独自設計のアクリル積層ケースを採用しており、見た目のわりにしっかり感があります。
+      </p>
+      <p>
+        Influenced by: Equilibrium, Keeblade, SAKANA (not おさかな)
+      </p>
+      <p>
+        <a href="./index.html">＜ Back</a>
+      </p>
+    </div>
+    <script type="module" src="/src/composition.ts"></script>
+  </body>
+</html>

@@ -30,6 +30,8 @@ export default defineConfig({
         affinity: resolve(__dirname, "affinity.html"),
         pollux: resolve(__dirname, "pollux.html"),
         ddm9: resolve(__dirname, "ddm9.html"),
+        equilibrium: resolve(__dirname, "equilibrium.html"),
+        composition: resolve(__dirname, "composition.html"),
       },
     },
   }
