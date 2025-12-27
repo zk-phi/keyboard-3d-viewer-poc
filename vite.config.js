@@ -32,6 +32,9 @@ export default defineConfig({
         ddm9: resolve(__dirname, "ddm9.html"),
         equilibrium: resolve(__dirname, "equilibrium.html"),
         composition: resolve(__dirname, "composition.html"),
+        "3dkeycaps": resolve(__dirname, "3dkeycaps.html"),
+        "iso-enter": resolve(__dirname, "iso-enter.html"),
+        nutshells: resolve(__dirname, "nutshells.html"),
       },
     },
   }

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keyboard-3d-viewer-poc</title>
+    <style>
+#app {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+#preview {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Self-Made Keyboards in Nutshells</h1>
+      <div id="status"></div>
+      <canvas id="preview" width="1080px" height="540px"></canvas>
+      <p>
+        過去に組み立ててきたキーボードたちへのリスペクトを込めたキーキャップです。
+      </p>
+      <p>
+        日本の自作キーボード黎明期の名作４つが、それぞれ 1u キーキャップという "nutshell" に収まっています（というダジャレです）。スイッチやキーキャップのカラーも、当時人気だった実在のパーツをモチーフにしています。
+      </p>
+      <p>
+        Influenced by: Helix, Ergo42, Corne, Claw44
+      </p>
+      <p>
+        <a href="./index.html">＜ Back</a>
+      </p>
+    </div>
+    <script type="module" src="/src/nutshells.ts"></script>
+  </body>
+</html>
