@@ -17,7 +17,7 @@
     "vite-plugin-javascript-obfuscator": "^3.1.0"
   },
   "dependencies": {
-    "@zip.js/zip.js": "^2.8.11",
+    "@zip.js/zip.js": "^2.8.13",
     "three": "^0.181.2"
   }
 }
